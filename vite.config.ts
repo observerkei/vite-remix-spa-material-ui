@@ -11,7 +11,7 @@ declare module "@remix-run/node" {
 export default defineConfig({
   ssr: {
     noExternal: [
-      "@mui/*",
+      "@mui/*", // fix material-ui ES modules imported error.
     ],
   },
   plugins: [
