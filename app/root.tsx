@@ -10,9 +10,9 @@ import {
 } from '@remix-run/react';
 import { withEmotionCache } from '@emotion/react';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
-import theme from './src/theme';
-import ClientStyleContext from './src/ClientStyleContext';
-import Layout from './src/Layout';
+import theme from './mui/theme';
+import ClientStyleContext from './mui/ClientStyleContext';
+import Layout from './mui/Layout';
 
 interface DocumentProps {
   children: React.ReactNode;

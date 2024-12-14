@@ -12,6 +12,7 @@ export default function About() {
       <Button variant="contained" component={Link} to="/">
         Go to the main page
       </Button>
+
     </React.Fragment>
   );
 }
