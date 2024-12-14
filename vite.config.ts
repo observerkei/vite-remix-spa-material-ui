@@ -9,6 +9,11 @@ declare module "@remix-run/node" {
 }
 
 export default defineConfig({
+  ssr: {
+    noExternal: [
+      "@mui/*",
+    ],
+  },
   plugins: [
     remix({
       ssr: false,
