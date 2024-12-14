@@ -2,7 +2,7 @@
 
 This template leverages [Remix SPA Mode](https://remix.run/docs/en/main/guides/spa-mode) and [Material UI Template](https://github.com/mui/material-ui/tree/master/examples/material-ui-remix-ts) to build your app as a Single-Page Application using [Client Data](https://remix.run/docs/en/main/guides/client-data) for all of your data loads and mutations.   
 
-Build with Remix v2.51.1 and fix build errors.  
+Build with Remix v2.51.1, Material UI v6.2.0 and fix build errors.  
 
 ## Setup
 
