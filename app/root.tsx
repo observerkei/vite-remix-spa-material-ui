@@ -13,6 +13,7 @@ import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
 import theme from './mui/theme';
 import ClientStyleContext from './mui/ClientStyleContext';
 import Layout from './mui/Layout';
+import './tailwind.css';
 
 interface DocumentProps {
   children: React.ReactNode;
