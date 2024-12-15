@@ -1,9 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { RemixBrowser } from '@remix-run/react';
-import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import theme from './mui/theme';
 import { MuiProvider } from './mui/MuiProvider';
 
 
@@ -12,11 +10,9 @@ const hydrate = () => {
     ReactDOM.hydrateRoot(
       document,
       <MuiProvider>
-        <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-            <RemixBrowser />
-        </ThemeProvider>
+          <RemixBrowser />
       </MuiProvider>,
     );
   });
