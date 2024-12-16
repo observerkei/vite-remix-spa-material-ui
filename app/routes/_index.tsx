@@ -10,6 +10,10 @@ export const meta: MetaFunction = () => [
   { name: 'description', content: 'Welcome to remix!' },
 ];
 
+export async function clientLoader() {
+  return null;
+}
+
 // https://remix.run/docs/en/main/file-conventions/routes#basic-routes
 export default function Index() {
   return (

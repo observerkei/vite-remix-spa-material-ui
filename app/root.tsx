@@ -13,6 +13,7 @@ import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
 import theme from './mui/theme';
 import ClientStyleContext from './mui/ClientStyleContext';
 import Layout from './mui/Layout';
+import './tailwind.css'
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -38,14 +39,13 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
   }, []);
 
   return (
-    <html lang="en">
+    <html lang="en" >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="theme-color" content={theme.palette.primary.main} />
         {title ? <title>{title}</title> : null}
         <Meta />
-        <Links />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
