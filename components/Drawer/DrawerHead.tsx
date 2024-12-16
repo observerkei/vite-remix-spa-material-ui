@@ -12,6 +12,8 @@ interface AppBarProps extends MuiAppBarProps {
     open?: boolean;
 }
 
+export const appBarHeight = 70; 
+
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme }) => ({
@@ -34,14 +36,13 @@ const AppBar = styled(MuiAppBar, {
     ],
 }));
 
-export const appBarHeight = 70; 
 
 export default function DrawerHead({ handleDrawerOpen, open }) {
 
     return (
         <>
             <AppBar position="fixed" open={open} sx={{
-                height: appBarHeight,
+                height: `${appBarHeight}px`,
                 justifyContent: 'center',
             }}>
                 <Toolbar style={{

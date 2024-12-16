@@ -37,7 +37,7 @@ const fakeContacts = {
         return newContact;
     },
     async set(id: string, value: ContactInfoType): Promise<ContactRecord> {
-        const contact = await fakeContacts.get(id);
+        const contact = await fakeContacts.get(id) as ContactRecord;
         invariant(contact, `No contact found for ${id}`);
         const updateContact = { ...contact, ...value };
         fakeContacts.records[id] = updateContact;

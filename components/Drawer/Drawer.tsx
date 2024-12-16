@@ -6,10 +6,14 @@ import Typography from '@mui/material/Typography';
 import DrawerMenu from './DrawerMenu';
 import DrawerHead from './DrawerHead';
 import { appBarHeight } from './DrawerHead';
+import { 
+  createEmptyContact,
+  ContactRecord,
+} from '@/app/api/data';
 
 import { useColorScheme, createTheme, ThemeProvider } from '@mui/material/styles';
 
-
+export const windowsMargin = 10;
 export const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
@@ -46,7 +50,10 @@ export const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-export default function PersistentDrawerLeft({ contacts, children }) {
+export default function PersistentDrawerLeft({
+  contacts,
+  children
+}: { contacts: Array<ContactRecord>, children: React.ReactNode }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -58,13 +65,18 @@ export default function PersistentDrawerLeft({ contacts, children }) {
     setOpen(false);
   };
   const handleCreateContact = () => {
-
+    const create = createEmptyContact();
+    create.then((createContact) => {
+      contacts.push(createContact);
+    })
   };
 
   return (
-    <Box sx={{ }} >
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <DrawerHead handleDrawerOpen={handleDrawerOpen} open={open} />
+      {
+        <DrawerHead handleDrawerOpen={handleDrawerOpen} open={open} />
+      }
       <DrawerMenu
         open={open}
         handleDrawerClose={handleDrawerClose}
@@ -74,7 +86,7 @@ export default function PersistentDrawerLeft({ contacts, children }) {
       />
       <Main open={open}>
         <DrawerHeader />
-          {children}
+        {children}
       </Main >
     </Box >
   );

@@ -18,8 +18,11 @@ import Layout from './mui/Layout';
 import Drawer from '@/components/Drawer/Drawer';
 import './tailwind.css'
 import {
-  getContacts
+  getContacts,
+  ContactRecord,
+  createEmptyContact
 } from "@/app/api/data";
+import { useState } from 'react';
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -119,10 +122,23 @@ export function ErrorBoundary() {
   return <h1>Unknown Error</h1>;
 }
 
+
+export const clientAction = async () => {
+  const contact = await createEmptyContact();
+  console.log('create.');
+  return new Response(null, {
+    status: 303,
+    headers: {
+      Location: "/",
+    },
+  });
+};
+
 export const clientLoader = async () => {
   const contacts = await getContacts();
   return Response.json({ contacts });
 };
+
 
 
 // https://remix.run/docs/en/main/route/component

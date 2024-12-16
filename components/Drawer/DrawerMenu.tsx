@@ -1,39 +1,34 @@
 import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import IconButton from '@mui/material/IconButton';
 import ContactList from '@/components/Contact/ContactList';
+import Box from '@mui/material/Box';
 
 
 import {
     DrawerHeader,
     drawerWidth
 } from './Drawer';
-import { Search } from '@mui/icons-material';
 import SearchBar from '../SearchBar/SearchBar';
-import { appBarHeight } from './DrawerHead';
 import CreateIcon from '@mui/icons-material/Create';
+import DrawerBottom from './DrawerBottom';
+import TestList from '@/components/Contact/TestList';
 
 export default function DrawerMenu({
-    open, 
-    handleDrawerClose, 
-    handleCreateContact, 
+    open,
+    handleDrawerClose,
+    handleCreateContact,
     theme,
-    contacts
+    contacts,
 }) {
     return (
         <>
             <Drawer
                 sx={{
                     width: drawerWidth,
+                    height: '100%',
                     flexShrink: 0,
                     '& .MuiDrawer-paper': {
                         width: drawerWidth,
@@ -45,7 +40,7 @@ export default function DrawerMenu({
                 open={open}
             >
                 <DrawerHeader>
-                    <SearchBar /> 
+                    <SearchBar />
                     <IconButton onClick={handleCreateContact}>
                         <CreateIcon />
                     </IconButton>
@@ -57,7 +52,9 @@ export default function DrawerMenu({
 
                 <Divider />
 
-                <ContactList contacts={contacts}/>
+                <ContactList contacts={contacts} />
+
+                <DrawerBottom handleAddContact={handleCreateContact} />
 
             </Drawer>
 

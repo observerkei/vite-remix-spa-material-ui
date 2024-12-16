@@ -1,6 +1,8 @@
 import * as React from 'react';
 import type { MetaFunction } from '@remix-run/node';
 import Typography from '@mui/material/Typography';
+import { createEmptyContact } from '~/api/data';
+import { redirect } from "@remix-run/node";
 
 // https://remix.run/docs/en/main/route/meta
 export const meta: MetaFunction = () => [
@@ -8,9 +10,6 @@ export const meta: MetaFunction = () => [
   { name: 'description', content: 'Welcome to remix!' },
 ];
 
-export async function clientLoader() {
-  return null;
-}
 
 // https://remix.run/docs/en/main/file-conventions/routes#basic-routes
 export default function Index() {
