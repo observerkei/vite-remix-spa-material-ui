@@ -23,9 +23,10 @@ export default function CheckboxListSecondary({ contacts }) {
     console.log(contact)
     updateContact(contact.id, { ...contact, favorite } ).then((newContact) => {
       console.log(newContact)
-      // update content
-      setChecked([1]);
     });
+    contact.favorite = favorite;
+    // update content
+    setChecked([1]);
   };
 
   return (

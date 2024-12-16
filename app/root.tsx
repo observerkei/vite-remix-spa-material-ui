@@ -14,15 +14,12 @@ import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
 import theme from './mui/theme';
 import ClientStyleContext from './mui/ClientStyleContext';
 import Layout from './mui/Layout';
+
 import Drawer from '@/components/Drawer/Drawer';
-//import './tailwind.css';
-import './style.css'
+import './tailwind.css'
 import {
   getContacts
 } from "@/app/api/data";
-import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
-
-
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -48,14 +45,13 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
   }, []);
 
   return (
-    <html lang="en">
+    <html lang="en" >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="theme-color" content={theme.palette.primary.main} />
         {title ? <title>{title}</title> : null}
         <Meta />
-        <Links />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
