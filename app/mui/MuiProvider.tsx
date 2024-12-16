@@ -31,7 +31,7 @@ export function MuiProvider({
   return (
     <ClientStyleContext.Provider value={clientStyleContextValue}>
       <CacheProvider value={cache}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme} defaultMode="dark" >{children}</ThemeProvider>
       </CacheProvider>
     </ClientStyleContext.Provider>
   );

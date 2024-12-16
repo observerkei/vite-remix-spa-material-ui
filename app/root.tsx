@@ -7,13 +7,22 @@ import {
   ScrollRestoration,
   useRouteError,
   isRouteErrorResponse,
+  useLoaderData,
 } from '@remix-run/react';
 import { withEmotionCache } from '@emotion/react';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
 import theme from './mui/theme';
 import ClientStyleContext from './mui/ClientStyleContext';
 import Layout from './mui/Layout';
-import './tailwind.css';
+import Drawer from '@/components/Drawer/Drawer';
+//import './tailwind.css';
+import './style.css'
+import {
+  getContacts
+} from "@/app/api/data";
+import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
+
+
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -64,17 +73,6 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
   );
 });
 
-// https://remix.run/docs/en/main/route/component
-// https://remix.run/docs/en/main/file-conventions/routes
-export default function App() {
-  return (
-    <Document>
-      <Layout>
-        <Outlet />
-      </Layout>
-    </Document>
-  );
-}
 
 // https://remix.run/docs/en/main/route/error-boundary
 export function ErrorBoundary() {
@@ -123,4 +121,26 @@ export function ErrorBoundary() {
   }
 
   return <h1>Unknown Error</h1>;
+}
+
+export const clientLoader = async () => {
+  const contacts = await getContacts();
+  return Response.json({ contacts });
+};
+
+
+// https://remix.run/docs/en/main/route/component
+// https://remix.run/docs/en/main/file-conventions/routes
+export default function App() {
+  const { contacts } = useLoaderData<typeof clientLoader>();
+
+  return (
+    <Document>
+      <Layout>
+        <Drawer contacts={contacts}>
+          <Outlet />
+        </Drawer>
+      </Layout>
+    </Document>
+  );
 }

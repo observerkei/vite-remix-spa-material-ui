@@ -3,10 +3,13 @@ import * as ReactDOM from 'react-dom/client';
 import { RemixBrowser } from '@remix-run/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { MuiProvider } from './mui/MuiProvider';
+import { dataInit } from './api/data'
+import { useColorScheme } from '@mui/material/styles';
 
 
 const hydrate = () => {
   React.startTransition(() => {
+    dataInit();
     ReactDOM.hydrateRoot(
       document,
       <MuiProvider>

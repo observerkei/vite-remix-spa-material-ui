@@ -9,56 +9,52 @@ import Avatar from '@mui/material/Avatar';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { pink } from '@mui/material/colors';
+import { 
+  ContactRecord,
+  updateContact,
+} from '~/api/data';
 
 
-export default function CheckboxListSecondary() {
+export default function CheckboxListSecondary({ contacts }) {
   const [checked, setChecked] = React.useState([1]);
 
-  const handleToggle = (value: number) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
+  const handleToggle = (contact: ContactRecord) => () => {
+    const favorite = !contact.favorite;
+    console.log(contact)
+    updateContact(contact.id, { ...contact, favorite } ).then((newContact) => {
+      console.log(newContact)
+      // update content
+      setChecked([1]);
+    });
   };
 
   return (
     <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-      {[0, 1, 2, 3].map((value) => {
-        const labelId = `checkbox-list-secondary-label-${value}`;
+      {contacts.map((contact: ContactRecord) => {
+        const labelId = `checkbox-list-secondary-label-${contact.id}`;
         return (
           <ListItem
-            key={value}
+            key={contact.id}
             secondaryAction={
-              <Checkbox
-                checkedIcon={<FavoriteIcon sx={{ color: pink[500] }} />}
-                icon={<FavoriteBorderIcon/>}
-                edge="end"
-                onChange={handleToggle(value)}
-                checked={checked.includes(value)}
-                inputProps={{ 'aria-labelledby': labelId }}
+              <Favorite 
+                contact={contact}
+                handleToggle={handleToggle}
+                labelId={labelId} 
               />
             }
             disablePadding
-          >
-            
-            <ListItemButton 
-                selected={checked.includes(value)}
+          > 
+
+            <ListItemButton
+              selected={contact.favorite}
             >
               <ListItemAvatar>
                 <Avatar
-                  alt={`Avatar n°${value + 1}`}
-                  src={`https://yt3.googleusercontent.com/omCAYVwVWYejBhb2z7ateJ9OUP1UxDBuZclB1SF07av6dhhjcZsNQeTQR8W2_b1FhAPAYjBt=s160-c-k-c0x00ffffff-no-rj`}
+                  alt={`Avatar n°${contact.id}-1`}
+                  src={contact.profilePictureURI}
                 />
               </ListItemAvatar>
-              <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
-            
-
+              <ListItemText id={`${labelId}-2`} primary={contact.name} />
             </ListItemButton>
 
           </ListItem>
@@ -66,4 +62,19 @@ export default function CheckboxListSecondary() {
       })}
     </List>
   );
+}
+
+function Favorite({contact, handleToggle, labelId}: {contact: ContactRecord, labelId: string}) {
+  return (
+    <>
+    <Checkbox
+      checkedIcon={<FavoriteIcon sx={{ color: pink[500] }} />}
+      icon={<FavoriteBorderIcon />}
+      edge="end"
+      onChange={handleToggle(contact)}
+      checked={contact.favorite}
+      inputProps={{ 'aria-labelledby': labelId }}
+    />
+    </>
+  )
 }

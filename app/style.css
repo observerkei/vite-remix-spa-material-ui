@@ -1,0 +1,14 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color-scheme: light dark;
+  background-color: black; /* 默认背景为黑色 */
+  transition: background-color 0.3s ease; /* 添加平滑过渡 */
+}
+
+@media (prefers-color-scheme: light) {
+  html, body {
+    background-color: white; /* 系统为浅色模式时使用白色背景 */
+  }
+}

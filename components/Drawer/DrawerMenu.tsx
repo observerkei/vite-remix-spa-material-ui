@@ -22,7 +22,13 @@ import SearchBar from '../SearchBar/SearchBar';
 import { appBarHeight } from './DrawerHead';
 import CreateIcon from '@mui/icons-material/Create';
 
-export default function DrawerMenu({open, handleDrawerClose, handleCreateContact, theme}) {
+export default function DrawerMenu({
+    open, 
+    handleDrawerClose, 
+    handleCreateContact, 
+    theme,
+    contacts
+}) {
     return (
         <>
             <Drawer
@@ -51,7 +57,7 @@ export default function DrawerMenu({open, handleDrawerClose, handleCreateContact
 
                 <Divider />
 
-                <ContactList />
+                <ContactList contacts={contacts}/>
 
             </Drawer>
 

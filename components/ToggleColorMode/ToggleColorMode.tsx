@@ -2,7 +2,6 @@ import { useColorScheme } from '@mui/material/styles';
 
 function ModeSwitcher() {
   const { mode, setMode } = useColorScheme();
-
   if (!mode) {
     return null;
   }
