@@ -9,12 +9,16 @@ import Box from '@mui/material/Box';
 
 import {
     DrawerHeader,
-    drawerWidth
+    drawerWidth,
+    drawerWidthREM,
 } from './Drawer';
+
 import SearchBar from '../SearchBar/SearchBar';
 import CreateIcon from '@mui/icons-material/Create';
 import DrawerBottom from './DrawerBottom';
 import TestList from '@/components/Contact/TestList';
+import { useState } from 'react';
+import { useNavigate } from '@remix-run/react';
 
 export default function DrawerMenu({
     open,
@@ -23,11 +27,14 @@ export default function DrawerMenu({
     theme,
     contacts,
 }) {
+    const [focusContactId, setFocusContactId] = useState("");
+    const navigate = useNavigate();
+
     return (
         <>
             <Drawer
                 sx={{
-                    width: drawerWidth,
+                    width: `${drawerWidth}px`,
                     height: '100%',
                     flexShrink: 0,
                     '& .MuiDrawer-paper': {
@@ -41,7 +48,7 @@ export default function DrawerMenu({
             >
                 <DrawerHeader>
                     <SearchBar />
-                    <IconButton onClick={handleCreateContact}>
+                    <IconButton onClick={() => focusContactId.length !== 0 && navigate(`/c/${focusContactId}/edit`)}>
                         <CreateIcon />
                     </IconButton>
 
@@ -52,7 +59,7 @@ export default function DrawerMenu({
 
                 <Divider />
 
-                <ContactList contacts={contacts} />
+                <ContactList contacts={contacts} setFocusContactId={setFocusContactId}/>
 
                 <DrawerBottom handleAddContact={handleCreateContact} />
 

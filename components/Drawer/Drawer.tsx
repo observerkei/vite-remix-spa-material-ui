@@ -15,6 +15,8 @@ import { useColorScheme, createTheme, ThemeProvider } from '@mui/material/styles
 
 export const windowsMargin = 10;
 export const drawerWidth = 300;
+export const drawerWidthREM = 10;
+
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
   open?: boolean;
@@ -49,6 +51,7 @@ export const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
 }));
+
 
 export default function PersistentDrawerLeft({
   contacts,

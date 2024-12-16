@@ -6,7 +6,6 @@ import { MuiProvider } from './mui/MuiProvider';
 import { dataInit } from './api/data'
 import { useColorScheme } from '@mui/material/styles';
 
-
 const hydrate = () => {
   React.startTransition(() => {
     dataInit();
@@ -23,6 +22,7 @@ const hydrate = () => {
 
 if (window.requestIdleCallback) {
   window.requestIdleCallback(hydrate);
+  
 } else {
   // Safari doesn't support requestIdleCallback
   // https://caniuse.com/requestidlecallback

@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {
-  Links,
   Meta,
-  Outlet,
   Scripts,
   ScrollRestoration,
   useRouteError,
@@ -14,20 +12,19 @@ import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
 import theme from './mui/theme';
 import ClientStyleContext from './mui/ClientStyleContext';
 import Layout from './mui/Layout';
-
-import Drawer from '@/components/Drawer/Drawer';
+import Home from './home';
 import './tailwind.css'
 import {
   getContacts,
-  ContactRecord,
   createEmptyContact
 } from "@/app/api/data";
-import { useState } from 'react';
+
 
 interface DocumentProps {
   children: React.ReactNode;
   title?: string;
 }
+
 
 const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCache) => {
   const clientStyleData = React.useContext(ClientStyleContext);
@@ -134,11 +131,11 @@ export const clientAction = async () => {
   });
 };
 
+
 export const clientLoader = async () => {
   const contacts = await getContacts();
   return Response.json({ contacts });
 };
-
 
 
 // https://remix.run/docs/en/main/route/component
@@ -149,9 +146,7 @@ export default function App() {
   return (
     <Document>
       <Layout>
-        <Drawer contacts={contacts}>
-          <Outlet />
-        </Drawer>
+        <Home contacts={contacts} />
       </Layout>
     </Document>
   );

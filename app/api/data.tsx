@@ -5,6 +5,7 @@ import invariant from "tiny-invariant";
 type ContactInfoType = {
     id?: string;
     name?: string;
+    description: string;
     profilePictureURI?: string;
     youtubeURI?: string;
     favorite?: boolean;

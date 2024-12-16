@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, useLoaderData } from '@remix-run/react';
 import Button from '@mui/material/Button';
-import ContactInfo from '@/components/Contact/ContactInfo';
+import ContactInfo from '@/components/Contact/ContactInfoEdit';
 import type {
   LinksFunction,
   LoaderFunctionArgs,
@@ -10,12 +10,11 @@ import { getContact } from '~/api/data';
 
 
 export const clientLoader = async ({
-  request,
+  params,
 }: LoaderFunctionArgs) => {
   console.log('load');
-  const url = new URL(request.url);
-  const contactId: string = url.searchParams.get("contactId") || "";
-  const contact = await getContact(contactId);
+  console.log(params.contactId);
+  const contact = await getContact(params.contactId);
   return Response.json({ contact });
 };
 
@@ -26,9 +25,9 @@ export default function ContactPage() {
 
   return (
     <React.Fragment>
-      <ContactInfo />
+      <ContactInfo contact={contact} />
       <br />
-      <Button variant="contained" component={Link} to="/">
+      <Button variant="contained" component={Link} to="/" >
         Go to the main page
       </Button>
 

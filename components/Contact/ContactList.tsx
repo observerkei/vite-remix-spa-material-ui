@@ -14,13 +14,30 @@ import {
   updateContact,
 } from '~/api/data';
 import Stack from '@mui/material/Stack';
-import { FixedSizeList } from 'react-window';
 import { appBottomHeight } from '@/components/Drawer/DrawerBottom';
 import { appBarHeight } from '@/components/Drawer/DrawerHead';
 import { windowsMargin } from '@/components/Drawer/Drawer';
+import {
+  useNavigate,
+} from '@remix-run/react';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 
 
-export default function CheckboxListSecondary({ contacts }) {
+const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 300,
+  },
+});
+
+
+export default function CheckboxListSecondary({
+  contacts,
+  setFocusContactId,
+}) {
   const [checked, setChecked] = React.useState([1]);
 
   const handleToggle = (contact: ContactRecord) => () => {
@@ -33,11 +50,11 @@ export default function CheckboxListSecondary({ contacts }) {
     // update content
     setChecked([1]);
   };
+  const navigate = useNavigate();
 
   return (
 
     <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
-
       <List
         dense
         sx={{
@@ -53,7 +70,6 @@ export default function CheckboxListSecondary({ contacts }) {
         {contacts.map((contact: ContactRecord) => {
           const labelId = `checkbox-list-secondary-label-${contact.id}`;
           return (
-
             <ListItem
               key={contact.id}
               secondaryAction={
@@ -65,18 +81,24 @@ export default function CheckboxListSecondary({ contacts }) {
               }
               disablePadding
             >
-
-              <ListItemButton
-                selected={contact.favorite}
-              >
-                <ListItemAvatar>
-                  <Avatar
-                    alt={`Avatar n°${contact.id}-1`}
-                    src={contact.profilePictureURI}
-                  />
-                </ListItemAvatar>
-                <ListItemText id={`${labelId}-2`} primary={contact.name} />
-              </ListItemButton>
+              
+              <CustomWidthTooltip title={contact.description} placement={'right'} arrow>
+                <ListItemButton
+                  onClick={() => {
+                    setFocusContactId(contact.id);
+                    navigate(`/c/${contact.id}`);
+                  }}
+                  selected={contact.favorite}
+                >
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={`Avatar n°${contact.id}-1`}
+                      src={contact.profilePictureURI}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText id={`${labelId}-2`} primary={contact.name} />
+                </ListItemButton>
+              </CustomWidthTooltip>
 
             </ListItem>
           );
