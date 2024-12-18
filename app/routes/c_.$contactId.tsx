@@ -7,7 +7,7 @@ import type {
   LoaderFunctionArgs,
 } from "@remix-run/node";
 import { getContact } from '~/api/data';
-
+import { Box } from "@mui/material";
 
 export const clientLoader = async ({
   params,
@@ -25,11 +25,20 @@ export default function ContactPage() {
 
   return (
     <React.Fragment>
-      <ContactInfo contact={contact} />
-      <br />
-      <Button variant="contained" component={Link} to="/" >
-        Go to the main page
-      </Button>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}>
+
+        <ContactInfo contact={contact} />
+        <br />
+        <Button variant="contained" component={Link} to="/" sx={{
+        }}>
+          Go to the main page
+        </Button>
+
+      </Box>
 
     </React.Fragment>
   );

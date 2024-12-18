@@ -28,12 +28,14 @@ const AppBar = styled(MuiAppBar, {
         {
             props: ({ open }) => open,
             style: {
-                width: `calc(100% - ${drawerWidth}px)`,
-                marginLeft: `${drawerWidth}px`,
-                transition: theme.transitions.create(['margin', 'width'], {
-                    easing: theme.transitions.easing.easeOut,
-                    duration: theme.transitions.duration.enteringScreen,
-                }),
+                [`@media (min-width: ${mobileMaxWidth}px)`]: {
+                    width: `calc(100% - ${drawerWidth}px)`,
+                    marginLeft: `${drawerWidth}px`,
+                    transition: theme.transitions.create(['margin', 'width'], {
+                        easing: theme.transitions.easing.easeOut,
+                        duration: theme.transitions.duration.enteringScreen,
+                    }),
+                },
             },
         },
     ],
