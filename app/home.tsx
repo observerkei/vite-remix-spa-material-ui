@@ -6,7 +6,7 @@ import { ContactRecord } from './api/data';
 
 export default function Home({ contacts }: { contacts: ContactRecord[] }) {
     return (
-        <Drawer contacts={contacts}>
+        <Drawer contacts={contacts} >
             <Outlet />
         </Drawer>
     );

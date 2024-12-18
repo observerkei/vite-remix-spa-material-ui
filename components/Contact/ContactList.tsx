@@ -39,6 +39,7 @@ export default function CheckboxListSecondary({
   setFocusContactId,
 }) {
   const [checked, setChecked] = React.useState([1]);
+  
 
   const handleToggle = (contact: ContactRecord) => () => {
     const favorite = !contact.favorite;

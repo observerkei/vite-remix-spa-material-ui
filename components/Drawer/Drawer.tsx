@@ -16,6 +16,7 @@ import { useColorScheme, createTheme, ThemeProvider } from '@mui/material/styles
 export const windowsMargin = 10;
 export const drawerWidth = 300;
 export const drawerWidthREM = 10;
+export const mobileMaxWidth = 600;
 
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
@@ -37,6 +38,9 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
           duration: theme.transitions.duration.enteringScreen,
         }),
         marginLeft: 0,
+        [`@media (max-width: ${mobileMaxWidth}px)`]: {
+          marginLeft: `-${drawerWidth}px`,
+        },
       },
     },
   ],
@@ -77,9 +81,7 @@ export default function PersistentDrawerLeft({
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      {
-        <DrawerHead handleDrawerOpen={handleDrawerOpen} open={open} />
-      }
+      <DrawerHead handleDrawerOpen={handleDrawerOpen} open={open} />
       <DrawerMenu
         open={open}
         handleDrawerClose={handleDrawerClose}

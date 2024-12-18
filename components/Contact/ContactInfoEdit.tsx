@@ -34,7 +34,8 @@ export default function ContactInfoEdit({ contact }) {
         alt={`Avatar n°${contact.id}-1`}
         src={contact.profilePictureURI}
         sx={{
-          width: 200, height: 200
+          width: 200, 
+          height: 200
         }}
       />
       <br />
@@ -42,7 +43,7 @@ export default function ContactInfoEdit({ contact }) {
       <Form id="contact-from" role="send" style={{
         display: 'flex',
         flexDirection: 'column',
-        width: '400px'
+        alignItems: 'stretch'        
       }}>
 
         <TextField
