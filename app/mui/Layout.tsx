@@ -5,10 +5,8 @@ import Copyright from './Copyright';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ my: 4, width: '100%' }}>
+    <Container maxWidth="xl" disableGutters >
         {children}
-      </Box>
     </Container>
   );
 }

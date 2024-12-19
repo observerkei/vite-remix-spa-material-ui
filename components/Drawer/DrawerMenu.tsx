@@ -11,7 +11,6 @@ import {
     desktopMinWidth,
     DrawerHeader,
     drawerWidth,
-    drawerWidthREM,
     mobileMaxWidth,
 } from './Drawer';
 

@@ -9,7 +9,7 @@ type ContactInfoType = {
     name?: string;
     description: string;
     profilePictureURI?: string;
-    youtubeURI?: string;
+    descriptionURI?: string;
     favorite?: boolean;
 };
 
@@ -87,16 +87,16 @@ export async function updateContact(id: string, update: ContactInfoType): Promis
 const db = [
     {
         name: 'Yukinoshita Peo',
-        profilePictureURI: 'https://yt3.googleusercontent.com/omCAYVwVWYejBhb2z7ateJ9OUP1UxDBuZclB1SF07av6dhhjcZsNQeTQR8W2_b1FhAPAYjBt=s160-c-k-c0x00ffffff-no-rj',
+        profilePictureURI: 'https://yt3.googleusercontent.com/omCAYVwVWYejBhb2z7ateJ9OUP1UxDBuZclB1SF07av6dhhjcZsNQeTQR8W2_b1FhAPAYjBt',
         description: 'I am a flower fairy ໒꒱\nI like chatting, streaming, studying english, playing Action game, hololive myth! ',
-        youtubeURI: 'https://www.youtube.com/@YukinoshitaPeo',
+        descriptionURI: 'https://ko-fi.com/yukinoshitapeo/shop',
         favorite: false,
     },
     {
-        name: 'Shinomiya Runa',
-        profilePictureURI: 'https://yt3.googleusercontent.com/nHOf1h_guQXgrCw-E3rDcEKV2r8wvOUys7_3lrvKsDWu-Fbf5VT_mBwCNglvWpaNGonWWjmcdQ=s160-c-k-c0x00ffffff-no-rj',
-        description: 'はじめまして！\nぶいすぽっ！所属の 紫宮るな(shinomiya runa)です🌙\n\n一緒に楽しいことしたいです！\nよろしくお願いします🙇‍♀️',
-        youtubeURI: 'https://www.youtube.com/@shinomiyaruna',
+        name: 'Nachoneko',
+        profilePictureURI: 'https://yt3.googleusercontent.com/VXeA7tz-RsePrgKKs99aYb8wz4aLSLH52lysXXpL8xH2mZt3dY65ae_0boggAy_Cy0t_3EzJ',
+        description: 'Nachoneko dayo.\n(Amashiro Natsuki)',
+        descriptionURI: 'https://amashiro.com/',
         favorite: false,
     }
 ]

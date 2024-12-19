@@ -15,7 +15,6 @@ interface AppBarProps extends MuiAppBarProps {
 }
 
 export const appBarHeight = 70;
-export const appBarHeightREM = 3;
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
@@ -84,7 +83,6 @@ export default function DrawerHead({ handleDrawerOpen, open }) {
                             Persistent drawer
                         </Typography>
                     </Box>
-
 
                     <ToggleColorMode />
 

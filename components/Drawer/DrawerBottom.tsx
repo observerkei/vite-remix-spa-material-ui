@@ -7,7 +7,6 @@ import {
 } from "@remix-run/react";
 
 export const appBottomHeight = 64;
-export const appBottomHeightREM = 3;
 
 export default function DrawerBottom({ handleAddContact }) {
     return (

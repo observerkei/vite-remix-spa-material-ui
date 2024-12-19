@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, useLoaderData } from '@remix-run/react';
 import Button from '@mui/material/Button';
-import ContactInfo from '@/components/Contact/ContactInfoEdit';
+import ContactInfo from '@/components/Contact/ContactInfo';
 import type {
   LinksFunction,
   LoaderFunctionArgs,
@@ -27,21 +27,7 @@ export default function ContactPage() {
 
   return (
     <React.Fragment>
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}>
-
         <ContactInfo contact={contact} />
-        <br />
-        <Button variant="contained" component={Link} to="/" sx={{
-        }}>
-          Go to the main page
-        </Button>
-
-      </Box>
-
     </React.Fragment>
   );
 }
