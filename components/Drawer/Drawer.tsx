@@ -17,6 +17,7 @@ export const windowsMargin = 10;
 export const drawerWidth = 300;
 export const drawerWidthREM = 10;
 export const mobileMaxWidth = 600;
+export const desktopMinWidth = 1200;
 
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{

@@ -16,11 +16,13 @@ import {
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import { useState } from 'react';
-import { drawerWidth, windowsMargin } from '@/components/Drawer/Drawer';
+import { drawerWidth, windowsMargin, desktopMinWidth } from '@/components/Drawer/Drawer';
+import { useMediaQuery } from 'react-responsive';
 
 
 export default function ContactInfoEdit({ contact }) {
   //const [editContact, setEditContact] = useState(contact);
+  const isDesktop = useMediaQuery({ minWidth: desktopMinWidth });
 
   return (
     <Box sx={{
@@ -28,6 +30,7 @@ export default function ContactInfoEdit({ contact }) {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      width: '100%',
     }}>
 
       <Avatar
@@ -43,7 +46,8 @@ export default function ContactInfoEdit({ contact }) {
       <Form id="contact-from" role="send" style={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'stretch'        
+        alignItems: 'stretch',
+        width: '100%',
       }}>
 
         <TextField
