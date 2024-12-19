@@ -22,7 +22,8 @@ import TestList from '@/components/Contact/TestList';
 import { useState } from 'react';
 import { useNavigate } from '@remix-run/react';
 import { useMediaQuery } from 'react-responsive';
-import { log } from 'console';
+import { console_dbg } from '@/app/api/util';
+
 
 export default function DrawerMenu({
     open,
@@ -36,8 +37,8 @@ export default function DrawerMenu({
     const navigate = useNavigate();
     const isMobile = useMediaQuery({ maxWidth: mobileMaxWidth });
 
-    console.log(`open`);
-    console.log(open);
+    console_dbg(`open`);
+    console_dbg(open);
 
     return (
         <>

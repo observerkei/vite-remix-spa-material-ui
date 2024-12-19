@@ -18,7 +18,7 @@ import {
   getContacts,
   createEmptyContact
 } from "@/app/api/data";
-
+import { console_dbg } from '@/app/api/util';
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -122,7 +122,7 @@ export function ErrorBoundary() {
 
 export const clientAction = async () => {
   const contact = await createEmptyContact();
-  console.log('create.');
+  console_dbg('create.');
   return new Response(null, {
     status: 303,
     headers: {

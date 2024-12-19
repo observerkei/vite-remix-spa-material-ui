@@ -1,6 +1,8 @@
 import { Face, FactCheck } from "@mui/icons-material";
 import { stringify } from "querystring";
 import invariant from "tiny-invariant";
+import { console_dbg } from '@/app/api/util';
+
 
 type ContactInfoType = {
     id?: string;
@@ -104,21 +106,21 @@ export function dataInit() {
         //localStorage.setItem('contacts', '');
         const localDB = localStorage.getItem('contacts');
         if (!localDB) {
-            //console.log('no local')
+            //console_dbg('no local')
             db.forEach((contact) => {
                 fakeContacts.create({
                     ...contact,
                 });
             });
-            //console.log(fakeContacts.records)
+            //console_dbg(fakeContacts.records)
         } else {
-            //console.log('has local')
+            //console_dbg('has local')
             const contacts: Record<string, ContactRecord> = JSON.parse(localDB);
             Object.keys(contacts)
                 .map((key) => fakeContacts.create({
                     ...(contacts[key])
                 }))
-            //console.log(fakeContacts.records)
+            //console_dbg(fakeContacts.records)
         }
     }
 }

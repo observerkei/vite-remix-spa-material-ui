@@ -24,6 +24,7 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { useMediaQuery } from 'react-responsive';
+import { console_dbg } from '@/app/api/util';
 
 
 const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -46,17 +47,17 @@ export default function CheckboxListSecondary({
 
   const handleToggle = (contact: ContactRecord) => () => {
     const favorite = !contact.favorite;
-    console.log(contact)
+    console_dbg(contact)
     updateContact(contact.id, { ...contact, favorite }).then((newContact) => {
-      console.log(newContact)
+      console_dbg(newContact)
     });
     contact.favorite = favorite;
     // update content
     setChecked([1]);
   };
   const navigate = useNavigate();
-  console.log('focusContactId')
-  console.log(focusContactId);
+  console_dbg('focusContactId')
+  console_dbg(focusContactId);
 
   return (
 

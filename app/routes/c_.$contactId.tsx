@@ -8,20 +8,22 @@ import type {
 } from "@remix-run/node";
 import { getContact } from '~/api/data';
 import { Box } from "@mui/material";
+import { console_dbg } from '@/app/api/util';
+
 
 export const clientLoader = async ({
   params,
 }: LoaderFunctionArgs) => {
-  console.log('load');
-  console.log(params.contactId);
+  console_dbg('load');
+  console_dbg(params.contactId);
   const contact = await getContact(params.contactId);
   return Response.json({ contact });
 };
 
 export default function ContactPage() {
   const { contact } = useLoaderData<typeof clientLoader>();
-  console.log('use');
-  console.log(contact);
+  console_dbg('use');
+  console_dbg(contact);
 
   return (
     <React.Fragment>
