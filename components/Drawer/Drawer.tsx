@@ -85,6 +85,7 @@ export default function PersistentDrawerLeft({
       <DrawerHead handleDrawerOpen={handleDrawerOpen} open={open} />
       <DrawerMenu
         open={open}
+        setOpen={(open) => setOpen(open)}
         handleDrawerClose={handleDrawerClose}
         handleCreateContact={handleCreateContact}
         theme={theme}

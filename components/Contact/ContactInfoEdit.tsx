@@ -25,59 +25,78 @@ export default function ContactInfoEdit({ contact }) {
   const isDesktop = useMediaQuery({ minWidth: desktopMinWidth });
 
   return (
-    <Box sx={{
-      '& > :not(style)': { m: 1 },
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      width: '100%',
-    }}>
-
-      <Avatar
-        alt={`Avatar n°${contact.id}-1`}
-        src={contact.profilePictureURI}
-        sx={{
-          width: 200, 
-          height: 200
-        }}
-      />
-      <br />
-
-      <Form id="contact-from" role="send" style={{
+    <>
+      <Box sx={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
-        width: '100%',
+        flexGrow: '1',
+        alignSelf: 'stretch',
       }}>
 
-        <TextField
-          id="standard-basic"
-          label="Account name"
-          variant="standard"
-          value={contact.name} />
-        <br />
+        <Box sx={isDesktop ? {
+          '& > :not(style)': { m: 1 },
+          display: 'flex',
+          alignItems: 'center',
+        } : {
+          '& > :not(style)': { m: 1 },
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}>
+          
 
-        <TextField
-          id="standard-basic"
-          label="Profile picture"
-          variant="standard"
-          value={contact.profilePictureURI} />
-        <br />
+          <Avatar
+            alt={`Avatar n°${contact.id}-1`}
+            src={contact.profilePictureURI}
+            style= {{
+              margin: 50,
+              width: 200,
+              height: 200,
+            }}
+          />
 
-        <TextField
-          id="standard-multiline-static"
-          label="Description"
-          multiline
-          rows={4}
-          value={contact.description}
-          variant="standard" />
-        <br />
+          <Form id="contact-from" role="send" style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            alignSelf: 'stretch',
+            maxWidth: '1000px',
+            flexGrow: 1,
+          }}>
 
-      </Form>
+            <TextField
+              id="standard-basic"
+              label="Account name"
+              variant="standard"
+              value={contact.name} />
+            <br />
 
-      <Form method="post">
-        <Button variant="contained" type="submit">New</Button>
-      </Form>
-    </Box>
+            <TextField
+              id="standard-basic"
+              label="Profile picture"
+              variant="standard"
+              value={contact.profilePictureURI} />
+            <br />
+
+            <TextField
+              id="standard-multiline-static"
+              label="Description"
+              multiline
+              rows={4}
+              value={contact.description}
+              variant="standard" />
+            <br />
+
+          </Form>
+
+        </Box>
+        
+        <Form method="post" style={{ alignSelf: 'center', }}>
+          <Button variant="contained" type="submit">Save</Button>
+        </Form>
+      </Box>
+
+    </>
   );
 }

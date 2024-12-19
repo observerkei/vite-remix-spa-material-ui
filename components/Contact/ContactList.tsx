@@ -36,6 +36,7 @@ const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 export default function CheckboxListSecondary({
   contacts,
+  focusContactId,
   setFocusContactId,
 }) {
   const [checked, setChecked] = React.useState([1]);
@@ -52,6 +53,8 @@ export default function CheckboxListSecondary({
     setChecked([1]);
   };
   const navigate = useNavigate();
+  console.log('focusContactId')
+  console.log(focusContactId);
 
   return (
 
@@ -89,7 +92,7 @@ export default function CheckboxListSecondary({
                     setFocusContactId(contact.id);
                     navigate(`/c/${contact.id}`);
                   }}
-                  selected={contact.favorite}
+                  selected={focusContactId == contact.id ? true : false}
                 >
                   <ListItemAvatar>
                     <Avatar
