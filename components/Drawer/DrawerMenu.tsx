@@ -75,7 +75,12 @@ export default function DrawerMenu({
 
                 <Divider />
 
-                <ContactList contacts={contacts} focusContactId={focusContactId} setFocusContactId={setFocusContactId}/>
+                <ContactList 
+                    contacts={contacts} 
+                    focusContactId={focusContactId} 
+                    setFocusContactId={setFocusContactId}
+                    setOpen={(open) => setOpen(open)}
+                />
 
                 <DrawerBottom handleAddContact={handleCreateContact} />
 

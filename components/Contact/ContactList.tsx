@@ -16,13 +16,14 @@ import {
 import Stack from '@mui/material/Stack';
 import { appBottomHeight } from '@/components/Drawer/DrawerBottom';
 import { appBarHeight } from '@/components/Drawer/DrawerHead';
-import { windowsMargin } from '@/components/Drawer/Drawer';
+import { mobileMaxWidth, windowsMargin } from '@/components/Drawer/Drawer';
 import {
   useNavigate,
 } from '@remix-run/react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
+import { useMediaQuery } from 'react-responsive';
 
 
 const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -38,9 +39,10 @@ export default function CheckboxListSecondary({
   contacts,
   focusContactId,
   setFocusContactId,
+  setOpen,  
 }) {
   const [checked, setChecked] = React.useState([1]);
-  
+  const isMobile = useMediaQuery({ maxWidth: mobileMaxWidth });
 
   const handleToggle = (contact: ContactRecord) => () => {
     const favorite = !contact.favorite;
@@ -90,6 +92,9 @@ export default function CheckboxListSecondary({
                 <ListItemButton
                   onClick={() => {
                     setFocusContactId(contact.id);
+                    if (isMobile) {
+                      setOpen(false);
+                    }
                     navigate(`/c/${contact.id}`);
                   }}
                   selected={focusContactId == contact.id ? true : false}
