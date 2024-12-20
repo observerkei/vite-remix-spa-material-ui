@@ -33,7 +33,10 @@ import {
 } from '@/app/api/data';
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode';
 
-const drawerWidth = 240;
+export const drawerWidth = 240;
+export const mobileMaxWidth = 600;
+export const appBarHeight = 64;
+export const windowsMargin = 10;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
@@ -50,6 +53,9 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
         duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: `-${drawerWidth}px`,
+    [`@media (max-width: ${mobileMaxWidth}px)`]: {
+        marginLeft: 0,
+    },
     variants: [
         {
             props: ({ open }) => open,
@@ -59,9 +65,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
                     duration: theme.transitions.duration.enteringScreen,
                 }),
                 marginLeft: 0,
-                [`@media (max-width: ${mobileMaxWidth}px)`]: {
-                    marginLeft: `-${drawerWidth}px`,
-                },
             },
         },
     ],
@@ -181,7 +184,7 @@ export default function PersistentDrawerLeft({
                         boxSizing: 'border-box',
                     },
                 }}
-                variant="persistent"
+                variant={isMobile ? "temporary" : "persistent"}
                 anchor="left"
                 onClose={toggleDrawer(false)}
                 open={open}
