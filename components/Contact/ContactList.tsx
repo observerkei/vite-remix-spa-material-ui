@@ -15,8 +15,8 @@ import {
 } from '~/api/data';
 import Stack from '@mui/material/Stack';
 import { appBottomHeight } from '@/components/Drawer/DrawerBottom';
-import { appBarHeight } from '@/components/Drawer/DrawerHead';
-import { mobileMaxWidth, windowsMargin } from '@/components/Drawer/Drawer';
+import { appBarHeight } from '@/components/Drawer/AppHead';
+import { mobileMaxWidth, windowsMargin } from '@/components/Drawer/DrawerBak';
 import {
   useNavigate,
 } from '@remix-run/react';

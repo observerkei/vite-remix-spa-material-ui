@@ -15,7 +15,6 @@ export default function DrawerBottom({ handleAddContact }) {
                 sx={{
                     display: 'flex',
                     alignItems: 'stretch',
-                    height: `${appBottomHeight}px`,
                     margin: '10px',
                 }}
             >
