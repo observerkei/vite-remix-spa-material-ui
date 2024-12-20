@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       maxWidth={false}
       disableGutters
       sx={{
-        height: '100vh',
+        height: '100dvh',
         display: 'flex',
         alignItems: 'stretch',
       }}
