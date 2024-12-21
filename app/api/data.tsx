@@ -67,7 +67,7 @@ export async function getContacts(): Promise<ContactRecord[]> {
 }
 
 export async function createEmptyContact(): Promise<ContactRecord> {
-    const create = fakeContacts.create({})
+    const create = fakeContacts.create({} as ContactRecord)
     return create;
 }
 

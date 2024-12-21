@@ -8,7 +8,7 @@ import {
 
 export const appBottomHeight = 64;
 
-export default function DrawerBottom({ handleAddContact }) {
+export default function DrawerBottom({ handleDrawerClose }) {
     return (
         <>
             <Box
@@ -31,6 +31,7 @@ export default function DrawerBottom({ handleAddContact }) {
                         sx={{
                             flexGrow: 1,
                         }}
+                        onClick={() => handleDrawerClose()}
                     >
                         ADD
                     </Button>

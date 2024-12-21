@@ -28,15 +28,15 @@ import { useNavigate } from '@remix-run/react';
 import { useMediaQuery } from 'react-responsive';
 import { console_dbg } from '@/app/api/util';
 import {
-    createEmptyContact,
     ContactRecord,
 } from '@/app/api/data';
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode';
 
 export const drawerWidth = 240;
 export const mobileMaxWidth = 600;
-export const appBarHeight = 64;
+export const appBarHeight = 56;
 export const windowsMargin = 10;
+export const desktopMinWidth = 1200;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
@@ -110,11 +110,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 type DrawerParams = {
     contacts: ContactRecord[];
     children: React.ReactElement;
+    urlFocusContactId: string;
 };
 
 export default function PersistentDrawerLeft({
     contacts,
     children,
+    urlFocusContactId,
 }: DrawerParams) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -127,16 +129,22 @@ export default function PersistentDrawerLeft({
         setOpen(false);
     };
 
-    const [focusContactId, setFocusContactId] = useState("");
+    const [focusContact, setFocusContact] = useState({} as ContactRecord);
+    if (urlFocusContactId && !focusContact?.id) {
+        console_dbg('update url f c : ', urlFocusContactId);
+        const nowFocusContact: ContactRecord[] 
+            = contacts.filter((c) => c.id == urlFocusContactId);
+        if (nowFocusContact.length) {
+         
+        setFocusContact(nowFocusContact[0]);
+        console_dbg("u f c id 2: ", JSON.stringify(nowFocusContact));
+       
+        }
+    }
+
     const navigate = useNavigate();
     const isMobile = useMediaQuery({ maxWidth: mobileMaxWidth });
 
-    const handleCreateContact = () => {
-        const create = createEmptyContact();
-        create.then((createContact) => {
-            contacts.push(createContact);
-        })
-    };
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
       };
@@ -168,7 +176,7 @@ export default function PersistentDrawerLeft({
                         alignItems: 'center',
                     }}>
                         <Typography variant="h6" noWrap component="div" >
-                            Persistent drawer
+                            { focusContact?.id && focusContact.id.length !== 0 ? focusContact.name : "Favorite collection"}
                         </Typography>
 
                         <ToggleColorMode />
@@ -192,11 +200,11 @@ export default function PersistentDrawerLeft({
                 <DrawerHeader>
                     <SearchBar />
                     <IconButton onClick={() => {
-                        if (focusContactId.length !== 0) {
+                        if (focusContact?.id && focusContact.id.length !== 0) {
                             if (isMobile) {
                                 setOpen(false);
                             }
-                            navigate(`/c/${focusContactId}/edit`);
+                            navigate(`/c/${focusContact.id}/edit`);
                         }
                     }}>
                         <CreateIcon />
@@ -210,12 +218,12 @@ export default function PersistentDrawerLeft({
 
                 <ContactList
                     contacts={contacts}
-                    focusContactId={focusContactId}
-                    setFocusContactId={setFocusContactId}
+                    focusContact={focusContact}
+                    setFocusContact={setFocusContact}
                     setOpen={(open: boolean) => setOpen(open)}
                 />
 
-                <DrawerBottom handleAddContact={handleCreateContact} />
+                <DrawerBottom handleDrawerClose={handleDrawerClose}/>
 
             </Drawer>
             <Main open={open}>

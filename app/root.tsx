@@ -6,6 +6,7 @@ import {
   useRouteError,
   isRouteErrorResponse,
   useLoaderData,
+  Outlet,
 } from '@remix-run/react';
 import { withEmotionCache } from '@emotion/react';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
@@ -16,9 +17,13 @@ import Home from './home';
 import './tailwind.css'
 import {
   getContacts,
-  createEmptyContact
+  createEmptyContact,
+  getContact
 } from "@/app/api/data";
 import { console_dbg } from '@/app/api/util';
+import Drawer from '@/components/Drawer/Drawer';
+import { LoaderFunctionArgs } from '@remix-run/node';
+import { json } from 'stream/consumers';
 
 interface DocumentProps {
   children: React.ReactNode;
@@ -126,27 +131,42 @@ export const clientAction = async () => {
   return new Response(null, {
     status: 303,
     headers: {
-      Location: "/",
+      Location: `/c/${contact.id}/edit`,
     },
   });
 };
 
 
-export const clientLoader = async () => {
+export const clientLoader = async ({
+  request,
+}: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
   const contacts = await getContacts();
-  return Response.json({ contacts });
+  var focusContactId = "";
+
+  console_dbg('root loader url: ', url.pathname)
+  if (url.pathname.startsWith("/c/")) {
+    focusContactId = url.pathname.split("/c/")[1] as string; // 按 "/c/" 分割，取第二部分
+  }
+
+  return Response.json({ contacts, focusContactId });
 };
 
 
 // https://remix.run/docs/en/main/route/component
 // https://remix.run/docs/en/main/file-conventions/routes
 export default function App() {
-  const { contacts } = useLoaderData<typeof clientLoader>();
-
+  const { contacts, focusContactId } = useLoaderData<typeof clientLoader>();
+  console_dbg('App Home');
+  console_dbg('contacts: ');
+  console_dbg(JSON.stringify(contacts));
+  console_dbg('focusContactId: ', JSON.stringify(focusContactId));
   return (
     <Document>
       <Layout>
-        <Home contacts={contacts} />
+        <Drawer contacts={contacts} urlFocusContactId={focusContactId} >
+          <Outlet />
+        </Drawer>
       </Layout>
     </Document>
   );
