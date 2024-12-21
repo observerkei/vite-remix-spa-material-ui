@@ -36,7 +36,6 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 }>(({ theme }) => ({
     display: 'flex',
     flexGrow: 1,
-    width: '100%',
     flexDirection: 'column',
     alignItems: 'stretch',
 

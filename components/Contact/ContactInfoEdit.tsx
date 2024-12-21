@@ -9,11 +9,18 @@ import Avatar from '@mui/material/Avatar';
 import { desktopMinWidth } from '@/components/Drawer/Drawer';
 import { useMediaQuery } from 'react-responsive';
 import { ContactRecord } from '~/api/data';
+import { console_dbg } from '~/api/util';
 
 
 export default function ContactInfoEdit({ contact }: { contact: ContactRecord }) {
-  //const [editContact, setEditContact] = useState(contact);
+  const [editContact, setEditContact] = React.useState({} as ContactRecord);
   const isDesktop = useMediaQuery({ minWidth: desktopMinWidth });
+
+  if (JSON.stringify(contact) !== JSON.stringify(editContact)) {
+    setEditContact(contact);
+  }
+
+  console_dbg(`input contact: ${JSON.stringify(contact)}`);
 
   return (
     <>
@@ -44,10 +51,9 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
           alignItems: 'center',
         }}>
           
-
           <Avatar
-            alt={`Avatar n°${contact.id}-1`}
-            src={contact.profilePictureURI}
+            alt={`Avatar n°${editContact.id}-1`}
+            src={editContact?.profilePictureURI || ""}
             style= {{
               width: 200,
               height: 200,
@@ -68,7 +74,7 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
               id="standard-basic"
               label="Account name"
               variant="standard"
-              value={contact.name || ""}
+              value={editContact?.name || ""}
             />
             <br />
 
@@ -76,14 +82,15 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
               id="standard-basic"
               label="Profile picture"
               variant="standard"
-              value={contact.profilePictureURI || ""} />
+              value={editContact?.profilePictureURI || ""} 
+            />
             <br />
             
             <TextField
               id="standard-basic"
               label="Description Page"
               variant="standard"
-              value={contact.descriptionURI || ""}
+              value={editContact?.descriptionURI || ""}
             />
             <br />
 
@@ -92,7 +99,7 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
               label="Description"
               multiline
               rows={4}
-              value={contact.description || ""}
+              value={editContact?.description || ""}
               variant="standard" 
               />
             <br />
