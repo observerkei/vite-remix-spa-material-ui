@@ -18,9 +18,10 @@ import Avatar from '@mui/material/Avatar';
 import { useState } from 'react';
 import { drawerWidth, windowsMargin, desktopMinWidth } from '@/components/Drawer/Drawer';
 import { useMediaQuery } from 'react-responsive';
+import { ContactRecord } from '~/api/data';
 
 
-export default function ContactInfoEdit({ contact }) {
+export default function ContactInfoEdit({ contact }: { contact: ContactRecord }) {
   //const [editContact, setEditContact] = useState(contact);
   const isDesktop = useMediaQuery({ minWidth: desktopMinWidth });
 
@@ -70,7 +71,8 @@ export default function ContactInfoEdit({ contact }) {
               id="standard-basic"
               label="Account name"
               variant="standard"
-              value={contact.name} />
+              value={contact.name}
+            />
             <br />
 
             <TextField
@@ -86,7 +88,8 @@ export default function ContactInfoEdit({ contact }) {
               multiline
               rows={4}
               value={contact.description}
-              variant="standard" />
+              variant="standard" 
+              />
             <br />
 
           </Form>
