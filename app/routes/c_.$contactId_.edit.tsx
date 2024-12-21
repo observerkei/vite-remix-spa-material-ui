@@ -23,6 +23,7 @@ export default function ContactPage() {
   const { contact } = useLoaderData<typeof clientLoader>();
   console_dbg('use');
   console_dbg(contact);
+  
 
   return (
     <React.Fragment>

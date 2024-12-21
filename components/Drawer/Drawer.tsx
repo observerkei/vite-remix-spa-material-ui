@@ -31,6 +31,8 @@ import {
     ContactRecord,
 } from '@/app/api/data';
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode';
+import { redirect } from "@remix-run/node"; // or cloudflare/deno
+
 
 export const drawerWidth = 240;
 export const mobileMaxWidth = 600;
@@ -204,6 +206,7 @@ export default function PersistentDrawerLeft({
                             if (isMobile) {
                                 setOpen(false);
                             }
+                            
                             navigate(`/c/${focusContact.id}/edit`);
                         }
                     }}>

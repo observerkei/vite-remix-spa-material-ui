@@ -1,22 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import {
   Form,
-  Links,
-  Meta,
-  Scripts,
-  ScrollRestoration,
 } from "@remix-run/react";
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-import { useState } from 'react';
-import { drawerWidth, windowsMargin, desktopMinWidth } from '@/components/Drawer/Drawer';
+import { desktopMinWidth } from '@/components/Drawer/Drawer';
 import { useMediaQuery } from 'react-responsive';
 import { ContactRecord } from '~/api/data';
 
@@ -71,7 +61,7 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
               id="standard-basic"
               label="Account name"
               variant="standard"
-              value={contact.name}
+              value={contact.name || ""}
             />
             <br />
 
@@ -79,7 +69,7 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
               id="standard-basic"
               label="Profile picture"
               variant="standard"
-              value={contact.profilePictureURI} />
+              value={contact.profilePictureURI || ""} />
             <br />
 
             <TextField
@@ -87,7 +77,7 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
               label="Description"
               multiline
               rows={4}
-              value={contact.description}
+              value={contact.description || ""}
               variant="standard" 
               />
             <br />
