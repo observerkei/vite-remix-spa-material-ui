@@ -28,14 +28,13 @@ export default function DrawerBottom({ handleDrawerClose }: { handleDrawerClose:
                     alignItems: 'center',
                     flexDirection: 'column',
                     justifyContent: 'center',
-                    paddingRight: '10px',
-                    paddingLeft: '10px',
+                    padding: '10px',
                 }}
             >
                 <Form method="post" style={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
+                    alignItems: 'stretch',
+                    width: '100%',
                     justifyContent: 'center',
                     flexGrow: 1,
                 }}>
@@ -45,6 +44,7 @@ export default function DrawerBottom({ handleDrawerClose }: { handleDrawerClose:
                         type="submit"
                         sx={{
                             flexGrow: 1,
+                            width: '100%',
                         }}
                         onClick={closeDrawer}
                     >
