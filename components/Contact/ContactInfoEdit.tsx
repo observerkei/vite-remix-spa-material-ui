@@ -20,19 +20,26 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
       <Box sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'stretch',
+        alignItems: 'center',
         flexGrow: '1',
         alignSelf: 'stretch',
         marginTop: '25px',
+        padding: '20px',
+
       }}>
 
         <Box sx={isDesktop ? {
           '& > :not(style)': { m: 1 },
           display: 'flex',
+          flexGrow: 1,
+          width: '100%',
           alignItems: 'center',
+          justifyContent: 'center',
         } : {
           '& > :not(style)': { m: 1 },
           display: 'flex',
+          flexGrow: 1,
+          width: '100%',
           flexDirection: 'column',
           alignItems: 'center',
         }}>
@@ -42,7 +49,6 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
             alt={`Avatar n°${contact.id}-1`}
             src={contact.profilePictureURI}
             style= {{
-              margin: 50,
               width: 200,
               height: 200,
             }}
@@ -51,10 +57,11 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
           <Form id="contact-from" role="send" style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'stretch',
-            alignSelf: 'stretch',
-            maxWidth: '1000px',
+            maxWidth: isDesktop ? '800px' : '600px',
+            width: '100%',
             flexGrow: 1,
+            margin: 50,
+
           }}>
 
             <TextField
@@ -70,6 +77,14 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
               label="Profile picture"
               variant="standard"
               value={contact.profilePictureURI || ""} />
+            <br />
+            
+            <TextField
+              id="standard-basic"
+              label="Description Page"
+              variant="standard"
+              value={contact.descriptionURI || ""}
+            />
             <br />
 
             <TextField
