@@ -79,6 +79,13 @@ const Document = withEmotionCache(({ children, title }: DocumentProps, emotionCa
 // https://remix.run/docs/en/main/route/error-boundary
 export function ErrorBoundary() {
   const error = useRouteError();
+  const centerLayout = {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+  };
 
   if (isRouteErrorResponse(error)) {
     let message;
@@ -94,13 +101,16 @@ export function ErrorBoundary() {
         throw new Error(error.data || error.statusText);
     }
 
+
     return (
       <Document title={`${error.status} ${error.statusText}`}>
         <Layout>
-          <h1>
-            {error.status}: {error.statusText}
-          </h1>
-          {message}
+          <div style={centerLayout}>
+            <h1>
+              {error.status}: {error.statusText}
+            </h1>
+            {message}
+          </div>
         </Layout>
       </Document>
     );
@@ -111,7 +121,7 @@ export function ErrorBoundary() {
     return (
       <Document title="Error!">
         <Layout>
-          <div>
+          <div style={centerLayout}>
             <h1>There was an error</h1>
             <p>{error.message}</p>
             <hr />
@@ -175,10 +185,10 @@ export default function App() {
   return (
     <Document>
       <Layout>
-        <Drawer 
-          contacts={contacts} 
-          urlFocusContactId={focusContactId} 
-          isDescriptPage={isDescriptPage} 
+        <Drawer
+          contacts={contacts}
+          urlFocusContactId={focusContactId}
+          isDescriptPage={isDescriptPage}
           navigate={navigate}
         >
           <Outlet />
