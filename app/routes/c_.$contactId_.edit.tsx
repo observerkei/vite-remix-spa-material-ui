@@ -14,8 +14,8 @@ export const clientLoader = async ({
   params,
 }: LoaderFunctionArgs) => {
   console_dbg('load');
-  console_dbg(params.contactId);
-  const contact = await getContact(params.contactId);
+  console_dbg(params.contactId as string);
+  const contact = await getContact(params.contactId as string);
   return Response.json({ contact });
 };
 

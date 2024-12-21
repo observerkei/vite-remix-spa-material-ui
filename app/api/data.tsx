@@ -83,6 +83,10 @@ export async function updateContact(id: string, update: ContactInfoType): Promis
     return fakeContacts.set(id, { ...old, ...update });
 }
 
+export async function deleteContact(id: string): Promise<null> {
+    return fakeContacts.destory(id);
+}
+
 
 const db = [
     {

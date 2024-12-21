@@ -12,7 +12,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
 import ContactList from '@/components/Contact/ContactList';
-import { Link } from "react-router-dom";
 
 import SearchBar from '../SearchBar/SearchBar';
 import CreateIcon from '@mui/icons-material/Create';
@@ -166,7 +165,7 @@ export default function PersistentDrawerLeft({
                     >
                         <MenuIcon />
                     </IconButton>
-                    <a 
+                    <a
                         href={`${focusContact.descriptionURI}`}
                         rel="noopener noreferrer"
                         style={{

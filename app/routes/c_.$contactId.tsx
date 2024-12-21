@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, useLoaderData } from '@remix-run/react';
+import { Link, redirect, useLoaderData, useNavigate } from '@remix-run/react';
 import Button from '@mui/material/Button';
 import ContactInfo from '@/components/Contact/ContactInfo';
 import type {
@@ -15,8 +15,15 @@ export const clientLoader = async ({
   params,
 }: LoaderFunctionArgs) => {
   console_dbg('load');
-  console_dbg(params.contactId);
-  const contact = await getContact(params.contactId);
+  console_dbg(params.contactId as string);
+  const contact = await getContact(params.contactId as string);
+  
+  // empty contact.
+  const descriptionURI = contact?.descriptionURI || "";
+  if (descriptionURI === "") {
+      return redirect(`/c/${contact?.id}/edit`);
+  }
+
   return Response.json({ contact });
 };
 

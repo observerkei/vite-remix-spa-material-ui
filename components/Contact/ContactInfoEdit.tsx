@@ -100,10 +100,22 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
           </Form>
 
         </Box>
+
+        <Box sx={{
+          display: 'flex',
+          gap: '50px',
+        }}>
         
         <Form method="post" style={{ alignSelf: 'center', }}>
           <Button variant="contained" type="submit">Save</Button>
         </Form>
+
+        
+        <Form method="post" action={`/c/${contact.id}/delete`} style={{ alignSelf: 'center', }}>
+          <Button color='error' variant="contained" type="submit">Delete</Button>
+        </Form>
+        </Box>
+
       </Box>
 
     </>
