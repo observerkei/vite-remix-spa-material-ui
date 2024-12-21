@@ -7,6 +7,7 @@ import {
   isRouteErrorResponse,
   useLoaderData,
   Outlet,
+  useNavigate,
 } from '@remix-run/react';
 import { withEmotionCache } from '@emotion/react';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
@@ -143,30 +144,43 @@ export const clientLoader = async ({
   const url = new URL(request.url);
   const contacts = await getContacts();
   var focusContactId = "";
+  var isDescriptPage = false;
 
   console_dbg('root loader url: ', url.pathname)
   if (url.pathname.startsWith("/c/")) {
     const parts = url.pathname.split('/').filter(part => part !== '');
     focusContactId = parts[1] as string; // 按 "/c/" 分割后，再取 / 之前的部分
     console_dbg('param path: ', JSON.stringify(parts));
+    if (parts.length == 2) {
+      isDescriptPage = true;
+    }
   }
 
-  return Response.json({ contacts, focusContactId });
+  return Response.json({ contacts, focusContactId, isDescriptPage });
 };
 
 
 // https://remix.run/docs/en/main/route/component
 // https://remix.run/docs/en/main/file-conventions/routes
 export default function App() {
-  const { contacts, focusContactId } = useLoaderData<typeof clientLoader>();
+  const { contacts, focusContactId, isDescriptPage } = useLoaderData<typeof clientLoader>();
   console_dbg('App Home');
   console_dbg('contacts: ');
   console_dbg(JSON.stringify(contacts));
   console_dbg('focusContactId: ', JSON.stringify(focusContactId));
+
+  const navigate = useNavigate();
+  console_dbg('isDescriptPage: ', JSON.stringify(isDescriptPage));
+
   return (
     <Document>
       <Layout>
-        <Drawer contacts={contacts} urlFocusContactId={focusContactId} >
+        <Drawer 
+          contacts={contacts} 
+          urlFocusContactId={focusContactId} 
+          isDescriptPage={isDescriptPage} 
+          navigate={navigate}
+        >
           <Outlet />
         </Drawer>
       </Layout>

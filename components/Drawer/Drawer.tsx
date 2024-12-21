@@ -5,34 +5,26 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
 import ContactList from '@/components/Contact/ContactList';
+import { Link } from "react-router-dom";
 
 import SearchBar from '../SearchBar/SearchBar';
 import CreateIcon from '@mui/icons-material/Create';
 import DrawerBottom from './DrawerBottom';
 import { useState } from 'react';
-import { useNavigate } from '@remix-run/react';
 import { useMediaQuery } from 'react-responsive';
 import { console_dbg } from '@/app/api/util';
 import {
     ContactRecord,
 } from '@/app/api/data';
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode';
-import { redirect } from "@remix-run/node"; // or cloudflare/deno
-
+import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 
 export const drawerWidth = 240;
 export const mobileMaxWidth = 600;
@@ -113,12 +105,16 @@ type DrawerParams = {
     contacts: ContactRecord[];
     children: React.ReactElement;
     urlFocusContactId: string;
+    isDescriptPage: boolean;
+    navigate: (a: string) => a;
 };
 
 export default function PersistentDrawerLeft({
     contacts,
     children,
     urlFocusContactId,
+    isDescriptPage,
+    navigate,
 }: DrawerParams) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -134,22 +130,21 @@ export default function PersistentDrawerLeft({
     const [focusContact, setFocusContact] = useState({} as ContactRecord);
     if (urlFocusContactId && !focusContact?.id) {
         console_dbg('update url f c : ', urlFocusContactId);
-        const nowFocusContact: ContactRecord[] 
+        const nowFocusContact: ContactRecord[]
             = contacts.filter((c) => c.id == urlFocusContactId);
         if (nowFocusContact.length) {
-         
-        setFocusContact(nowFocusContact[0]);
-        console_dbg("u f c id 2: ", JSON.stringify(nowFocusContact));
-       
+
+            setFocusContact(nowFocusContact[0]);
+            console_dbg("u f c id 2: ", JSON.stringify(nowFocusContact));
+
         }
     }
 
-    const navigate = useNavigate();
     const isMobile = useMediaQuery({ maxWidth: mobileMaxWidth });
 
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
-      };
+    };
 
 
     return (
@@ -171,6 +166,30 @@ export default function PersistentDrawerLeft({
                     >
                         <MenuIcon />
                     </IconButton>
+                    <a 
+                        href={`${focusContact.descriptionURI}`}
+                        rel="noopener noreferrer"
+                        style={{
+                            textDecoration: "none",
+                            color: "inherit"
+                        }}
+                    >
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="start"
+                            sx={[
+                                {
+                                    mr: 2,
+                                },
+                                !(isDescriptPage && `${focusContact.descriptionURI}`.length > 0) && { display: 'none' },
+                            ]}
+                        >
+                            <AspectRatioIcon />
+                        </IconButton>
+                    </a>
+
+
                     <Box sx={{
                         flexGrow: 1,
                         display: 'flex',
@@ -178,7 +197,7 @@ export default function PersistentDrawerLeft({
                         alignItems: 'center',
                     }}>
                         <Typography variant="h6" noWrap component="div" >
-                            { focusContact?.id && focusContact.id.length !== 0 ? focusContact.name : "Favorite collection"}
+                            {focusContact?.id && focusContact.id.length !== 0 ? focusContact.name : "Favorite collection"}
                         </Typography>
 
                         <ToggleColorMode />
@@ -206,7 +225,7 @@ export default function PersistentDrawerLeft({
                             if (isMobile) {
                                 setOpen(false);
                             }
-                            
+
                             navigate(`/c/${focusContact.id}/edit`);
                         }
                     }}>
@@ -226,7 +245,7 @@ export default function PersistentDrawerLeft({
                     setOpen={(open: boolean) => setOpen(open)}
                 />
 
-                <DrawerBottom handleDrawerClose={handleDrawerClose}/>
+                <DrawerBottom handleDrawerClose={handleDrawerClose} />
 
             </Drawer>
             <Main open={open}>
