@@ -62,62 +62,60 @@ export default function CheckboxListSecondary({
 
   return (
 
-    <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
-      <List
-        dense
-        sx={{
-          width: '100%',
-          maxHeight: `calc(100dvh - ${appBarHeight}px - ${appBottomHeight}px - ${windowsMargin}px)`,
-          position: 'relative',
-          overflow: 'auto',
-          '& ul': { padding: 0 },
-        }}>
-        <Box>
+    <List
+      dense
+      sx={{
+        flex: "1 1 auto",
+        width: '100%',
+        flexGrow: '1',
+        position: 'relative',
+        overflow: 'auto',
+        '& ul': { padding: 0 },
+      }}>
+      <Box>
 
-          {contacts.map((contact: ContactRecord) => {
-            const labelId = `checkbox-list-secondary-label-${contact.id}`;
-            return (
-              <ListItem
-                key={contact.id}
-                secondaryAction={
-                  <Favorite
-                    contact={contact}
-                    handleToggle={handleToggle}
-                    labelId={labelId}
-                  />
-                }
-                disablePadding
-              >
+        {contacts.map((contact: ContactRecord) => {
+          const labelId = `checkbox-list-secondary-label-${contact.id}`;
+          return (
+            <ListItem
+              key={contact.id}
+              secondaryAction={
+                <Favorite
+                  contact={contact}
+                  handleToggle={handleToggle}
+                  labelId={labelId}
+                />
+              }
+              disablePadding
+            >
 
-                <CustomWidthTooltip title={contact.description} placement={'right'} arrow>
-                  <ListItemButton
-                    onClick={() => {
-                      setFocusContact(contact);
-                      if (isMobile) {
-                        setOpen(false);
-                      }
-                      navigate(`/c/${contact.id}`);
-                    }}
-                    selected={focusContact?.id == contact.id ? true : false}
-                  >
-                    <ListItemAvatar>
-                      <Avatar
-                        alt={`Avatar n°${contact.id}-1`}
-                        src={contact.profilePictureURI}
-                      />
-                    </ListItemAvatar>
-                    <ListItemText id={`${labelId}-2`} primary={contact.name} />
-                  </ListItemButton>
-                </CustomWidthTooltip>
+              <CustomWidthTooltip title={contact.description} placement={'right'} arrow>
+                <ListItemButton
+                  onClick={() => {
+                    setFocusContact(contact);
+                    if (isMobile) {
+                      setOpen(false);
+                    }
+                    navigate(`/c/${contact.id}`);
+                  }}
+                  selected={focusContact?.id == contact.id ? true : false}
+                >
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={`Avatar n°${contact.id}-1`}
+                      src={contact.profilePictureURI}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText id={`${labelId}-2`} primary={contact.name} />
+                </ListItemButton>
+              </CustomWidthTooltip>
 
-              </ListItem>
-            );
-          })}
-        </Box>
+            </ListItem>
+          );
+        })}
+      </Box>
 
-      </List>
-
-    </Stack>
+    </List>
 
   );
 }

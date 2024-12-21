@@ -8,6 +8,7 @@ import {
   useLoaderData,
   Outlet,
   useNavigate,
+  redirect,
 } from '@remix-run/react';
 import { withEmotionCache } from '@emotion/react';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
@@ -139,12 +140,7 @@ export function ErrorBoundary() {
 export const clientAction = async () => {
   const contact = await createEmptyContact();
   console_dbg('create.');
-  return new Response(null, {
-    status: 303,
-    headers: {
-      Location: `/c/${contact.id}/edit`,
-    },
-  });
+  return redirect(`/c/${contact.id}/edit`);
 };
 
 

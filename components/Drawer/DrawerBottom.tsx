@@ -5,23 +5,38 @@ import { Height, Margin } from "@mui/icons-material";
 import {
     Form,
 } from "@remix-run/react";
+import { mobileMaxWidth } from "./Drawer";
+import { useMediaQuery } from 'react-responsive';
 
 export const appBottomHeight = 64;
 
-export default function DrawerBottom({ handleDrawerClose }) {
+export default function DrawerBottom({ handleDrawerClose }: { handleDrawerClose: any }) {
+    const isMobile = useMediaQuery({ maxWidth: mobileMaxWidth });
+
+    const closeDrawer = () => {
+        if (isMobile) {
+            handleDrawerClose();
+        }
+    }
+
     return (
         <>
             <Box
                 sx={{
+                    flex: "0 0 auto",
                     display: 'flex',
-                    alignItems: 'stretch',
-                    margin: '10px',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    paddingRight: '10px',
+                    paddingLeft: '10px',
                 }}
             >
                 <Form method="post" style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'stretch',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     flexGrow: 1,
                 }}>
                     <Button
@@ -31,7 +46,7 @@ export default function DrawerBottom({ handleDrawerClose }) {
                         sx={{
                             flexGrow: 1,
                         }}
-                        onClick={() => handleDrawerClose()}
+                        onClick={closeDrawer}
                     >
                         ADD
                     </Button>

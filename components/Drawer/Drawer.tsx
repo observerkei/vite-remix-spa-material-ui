@@ -98,6 +98,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+    flex: "0 0 auto"
 }));
 
 type DrawerParams = {
@@ -127,7 +128,7 @@ export default function PersistentDrawerLeft({
     };
 
     const [focusContact, setFocusContact] = useState({} as ContactRecord);
-    if (urlFocusContactId && !focusContact?.id) {
+    if (urlFocusContactId !== focusContact?.id) {
         console_dbg('update url f c : ', urlFocusContactId);
         const nowFocusContact: ContactRecord[]
             = contacts.filter((c) => c.id == urlFocusContactId);
@@ -144,7 +145,9 @@ export default function PersistentDrawerLeft({
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
     };
+    const focusContactDescriptURL = focusContact?.descriptionURI || "";
 
+    const appHeadText = focusContact?.name || "Favorite collection";
 
     return (
         <Box sx={{ display: 'flex', flexGrow: 1, }}>
@@ -181,7 +184,7 @@ export default function PersistentDrawerLeft({
                                 {
                                     mr: 2,
                                 },
-                                !(isDescriptPage && `${focusContact.descriptionURI}`.length > 0) && { display: 'none' },
+                                !(isDescriptPage && focusContactDescriptURL.length > 0) && { display: 'none' },
                             ]}
                         >
                             <AspectRatioIcon />
@@ -196,13 +199,14 @@ export default function PersistentDrawerLeft({
                         alignItems: 'center',
                     }}>
                         <Typography variant="h6" noWrap component="div" >
-                            {focusContact?.id && focusContact.id.length !== 0 ? focusContact.name : "Favorite collection"}
+                            {appHeadText}
                         </Typography>
 
                         <ToggleColorMode />
                     </Box>
                 </Toolbar>
             </AppBar>
+            
             <Drawer
                 sx={{
                     width: drawerWidth,
@@ -211,6 +215,8 @@ export default function PersistentDrawerLeft({
                         width: drawerWidth,
                         boxSizing: 'border-box',
                     },
+                    display: 'flex',
+                    flexDirection: 'column',
                 }}
                 variant={isMobile ? "temporary" : "persistent"}
                 anchor="left"
@@ -234,6 +240,7 @@ export default function PersistentDrawerLeft({
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                     </IconButton>
+
                 </DrawerHeader>
                 <Divider />
 
