@@ -146,7 +146,9 @@ export const clientLoader = async ({
 
   console_dbg('root loader url: ', url.pathname)
   if (url.pathname.startsWith("/c/")) {
-    focusContactId = url.pathname.split("/c/")[1] as string; // 按 "/c/" 分割，取第二部分
+    const parts = url.pathname.split('/').filter(part => part !== '');
+    focusContactId = parts[1] as string; // 按 "/c/" 分割后，再取 / 之前的部分
+    console_dbg('param path: ', JSON.stringify(parts));
   }
 
   return Response.json({ contacts, focusContactId });
