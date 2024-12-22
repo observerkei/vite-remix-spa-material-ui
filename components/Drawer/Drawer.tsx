@@ -157,7 +157,8 @@ export default function PersistentDrawerLeft({
 
     const isMobile = useMediaQuery({ maxWidth: mobileMaxWidth });
     const focusContactDescriptURL = focusContact?.descriptionURI || "";
-
+    const focusContactId = focusContact?.id || ""; 
+ 
     const appHeadText = focusContact?.name || "Favorite collection";
 
     return (
@@ -241,7 +242,11 @@ export default function PersistentDrawerLeft({
 
                             navigate(`/c/${focusContact.id}/edit`);
                         }
-                    }}>
+                    }}
+                        sx={[
+                            !(focusContactId.length > 0) && { display: 'none' },
+                        ]}
+                    >
                         <CreateIcon />
                     </IconButton>
 
