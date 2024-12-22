@@ -142,6 +142,7 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
               variant="contained" 
               type="submit" 
               onClick={() => handleActionChange(`/c/${editContact.id}/edit`)} 
+              sx={{ width: '100px', borderRadius: 28 }}
             >
               Save
             </Button>
@@ -150,6 +151,7 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
               variant="contained" 
               type="submit" 
               onClick={() => handleActionChange(`/c/${editContact.id}/delete`)} 
+              sx={{ width: '100px', borderRadius: 28 }}
             >
               Delete
             </Button>

@@ -45,7 +45,9 @@ export default function DrawerBottom({ handleDrawerClose }: { handleDrawerClose:
                         sx={{
                             flexGrow: 1,
                             width: '100%',
+                            borderRadius: 28,
                         }}
+                        
                         onClick={closeDrawer}
                     >
                         ADD
