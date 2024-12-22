@@ -21,7 +21,10 @@ import { useMediaQuery } from 'react-responsive';
 import { console_dbg } from '@/app/api/util';
 import {
     ContactRecord,
-} from '@/app/api/data';
+    OPEN_DRAWER,
+    getLocalData,
+    setLocalData,
+} from '~/api/data';
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 
@@ -123,14 +126,20 @@ export default function PersistentDrawerLeft({
 }: DrawerParams) {
     const theme = useTheme();
     const isDesktop = useMediaQuery({ minWidth: desktopMinWidth }); 
-    const [open, setOpen] = React.useState(isDesktop ? true : false);
+    const localOpen = getLocalData(OPEN_DRAWER);
+    const [open, setOpen] = React.useState(localOpen);
+
+    const handleOpenDrawer = (open: boolean) => {
+        setOpen(open);
+        setLocalData(OPEN_DRAWER, open);
+    };
 
     const handleDrawerOpen = () => {
-        setOpen(true);
+        handleOpenDrawer(true)
     };
 
     const handleDrawerClose = () => {
-        setOpen(false);
+        handleOpenDrawer(false)
     };
 
     const [focusContact, setFocusContact] = useState({} as ContactRecord);
@@ -147,10 +156,6 @@ export default function PersistentDrawerLeft({
     }
 
     const isMobile = useMediaQuery({ maxWidth: mobileMaxWidth });
-
-    const toggleDrawer = (newOpen: boolean) => () => {
-        setOpen(newOpen);
-    };
     const focusContactDescriptURL = focusContact?.descriptionURI || "";
 
     const appHeadText = focusContact?.name || "Favorite collection";
@@ -219,7 +224,7 @@ export default function PersistentDrawerLeft({
                 }}
                 variant={isMobile ? "temporary" : "persistent"}
                 anchor="left"
-                onClose={toggleDrawer(false)}
+                onClose={handleDrawerClose}
                 open={open}
             >
                 <DrawerHeader>
@@ -231,7 +236,7 @@ export default function PersistentDrawerLeft({
                     <IconButton onClick={() => {
                         if (focusContact?.id && focusContact.id.length !== 0) {
                             if (isMobile) {
-                                setOpen(false);
+                                handleDrawerClose();
                             }
 
                             navigate(`/c/${focusContact.id}/edit`);
@@ -251,7 +256,7 @@ export default function PersistentDrawerLeft({
                     contacts={contacts}
                     focusContact={focusContact}
                     setFocusContact={setFocusContact}
-                    setOpen={(open: boolean) => setOpen(open)}
+                    handleDrawerClose={handleDrawerClose}
                 />
 
                 <DrawerBottom handleDrawerClose={handleDrawerClose} />

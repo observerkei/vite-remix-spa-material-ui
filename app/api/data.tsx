@@ -91,6 +91,17 @@ export async function deleteContact(id: string): Promise<null> {
     return fakeContacts.destory(id);
 }
 
+export const OPEN_DRAWER = 'openDrawer';
+
+export function getLocalData(key: string) {
+    const value = localStorage.getItem(key);
+    return JSON.parse(value || '');
+}
+
+export function setLocalData(key: string, value: any) {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
 
 const db = [
     {

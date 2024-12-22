@@ -22,7 +22,7 @@ import {
   getContacts,
   createEmptyContact,
   getContact
-} from "@/app/api/data";
+} from "~/api/data";
 import { console_dbg } from '@/app/api/util';
 import Drawer from '@/components/Drawer/Drawer';
 import { LoaderFunctionArgs } from '@remix-run/node';
@@ -177,14 +177,19 @@ export const clientLoader = async ({
 // https://remix.run/docs/en/main/route/component
 // https://remix.run/docs/en/main/file-conventions/routes
 export default function App() {
-  const { contacts, focusContactId, isDescriptPage, q } = useLoaderData<typeof clientLoader>();
+  const { 
+    contacts, 
+    focusContactId, 
+    isDescriptPage, 
+    q 
+  } = useLoaderData<typeof clientLoader>();
+  const navigate = useNavigate();
   const submit = useSubmit();
+
   console_dbg('App Home');
   console_dbg('contacts: ');
   console_dbg(JSON.stringify(contacts));
   console_dbg('focusContactId: ', JSON.stringify(focusContactId));
-
-  const navigate = useNavigate();
   console_dbg('isDescriptPage: ', JSON.stringify(isDescriptPage));
 
   return (

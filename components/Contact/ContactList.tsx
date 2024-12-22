@@ -37,12 +37,19 @@ const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
 });
 
 
+type ContactListParams = {
+  contacts: ContactRecord[];
+  focusContact: ContactRecord;
+  setFocusContact: any;
+  handleDrawerClose: any;
+}
+
 export default function CheckboxListSecondary({
   contacts,
   focusContact,
   setFocusContact,
-  setOpen,
-}) {
+  handleDrawerClose,
+}: ContactListParams) {
   const [checked, setChecked] = React.useState([1]);
   const isMobile = useMediaQuery({ maxWidth: mobileMaxWidth });
 
@@ -94,7 +101,7 @@ export default function CheckboxListSecondary({
                   onClick={() => {
                     setFocusContact(contact);
                     if (isMobile) {
-                      setOpen(false);
+                      handleDrawerClose();
                     }
                     navigate(`/c/${contact.id}`);
                   }}

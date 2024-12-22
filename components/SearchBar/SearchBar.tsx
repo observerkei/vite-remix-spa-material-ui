@@ -45,7 +45,6 @@ export default function SearchBar({ Form, searchDefaultValue, submit }: SearchBa
           type="search"
           size="small"
           label="Search"
-          defaultValue={searchDefaultValue || ""}
           onChange={(event) => setQuery(event.currentTarget.value)}
           autoFocus={searchDefaultValue?.length > 0 ? true : false}
           slotProps={{
