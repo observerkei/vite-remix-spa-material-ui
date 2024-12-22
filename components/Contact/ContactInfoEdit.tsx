@@ -17,6 +17,7 @@ type ContactInfoEditParam = {
 export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam) {
   const [editContact, setEditContact] = React.useState({} as ContactRecord);
   const isDesktop = useMediaQuery({ minWidth: desktopMinWidth });
+  const formRef = React.useRef<HTMLFormElement>(null);
 
   if (contact.id !== editContact.id) {
     setEditContact(contact);
@@ -24,11 +25,17 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
   }
   console_dbg(`input contact: ${JSON.stringify(contact)}`);
 
+  const handleActionChange = (path: string) => {
+    if (formRef.current) {
+      formRef.current.action = path; // Set the action property dynamically
+    }
+  };
+
   // Changing the key forces a reset of the component
   return (
     <>
       <Box
-        key={`${editContact.id}`}
+        key={`edit-${editContact.id}`}
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -42,8 +49,8 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
 
         <Form
           id="contact-from"
+          ref={formRef}
           method="post"
-          action={`/c/${contact?.id}/edit`}
           style={{
             width: '100%',
             display: 'flex',
@@ -73,7 +80,8 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
               style={{
                 width: 200,
                 height: 200,
-                margin: '50px',
+                marginLeft: '50px',
+                marginRight: '50px',
               }}
             />
 
@@ -124,25 +132,29 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
               <br />
             </Box>
           </Box>
-          <Box sx={{ alignSelf: 'center', marginLeft: '-150px' }}>
-            <Button variant="contained" type="submit" >Save</Button>
+
+          <Box sx={{ 
+            display: 'flex', 
+            alignSelf: 'center', 
+            gap: '50px', 
+          }}>
+            <Button 
+              variant="contained" 
+              type="submit" 
+              onClick={() => handleActionChange(`/c/${editContact.id}/edit`)} 
+            >
+              Save
+            </Button>
+            <Button 
+              color='error' 
+              variant="contained" 
+              type="submit" 
+              onClick={() => handleActionChange(`/c/${editContact.id}/delete`)} 
+            >
+              Delete
+            </Button>
           </Box>
-
         </Form>
-
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          gap: '50px',
-          marginTop: '-43px',
-          marginRight: '-150px',
-        }}>
-
-          <Form method="post" action={`/c/${contact?.id}/delete`} >
-            <Button color='error' variant="contained" >Delete</Button>
-          </Form>
-        </Box>
-
       </Box>
     </>
   );

@@ -13,14 +13,13 @@ import { console_dbg } from '@/app/api/util';
 import invariant from 'tiny-invariant';
 
 
-
 export const clientAction = async ({
   params,
   request,
 }: ActionFunctionArgs) => {
   console_dbg('insert edit action.');
   invariant(params.contactId, "Missing contactId param");
-  
+
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
   await updateContact(params.contactId, updates);

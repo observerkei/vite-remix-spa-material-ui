@@ -15,6 +15,7 @@ export default function ContactInfo({ contact }: ContactInfoParams) {
     return (
         <>
             <iframe
+                key={`form-${contact.id}`}
                 src={ contact.descriptionURI || ""}
                 sandbox="allow-scripts allow-forms allow-same-origin"
                 frameBorder="0"
