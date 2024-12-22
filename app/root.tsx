@@ -9,6 +9,8 @@ import {
   Outlet,
   useNavigate,
   redirect,
+  Form,
+  useSubmit,
 } from '@remix-run/react';
 import { withEmotionCache } from '@emotion/react';
 import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
@@ -146,10 +148,12 @@ export const clientLoader = async ({
   request,
 }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
-  const contacts = await getContacts();
+  const q = url.searchParams.get("q");
+
+  const contacts = await getContacts(q);
   var focusContactId = "";
   var isDescriptPage = false;
-
+  
   console_dbg('root loader url: ', url.pathname)
   if (url.pathname.startsWith("/c/")) {
     const parts = url.pathname.split('/').filter(part => part !== '');
@@ -161,14 +165,15 @@ export const clientLoader = async ({
     }
   }
 
-  return Response.json({ contacts, focusContactId, isDescriptPage });
+  return Response.json({ contacts, focusContactId, isDescriptPage, q });
 };
 
 
 // https://remix.run/docs/en/main/route/component
 // https://remix.run/docs/en/main/file-conventions/routes
 export default function App() {
-  const { contacts, focusContactId, isDescriptPage } = useLoaderData<typeof clientLoader>();
+  const { contacts, focusContactId, isDescriptPage, q } = useLoaderData<typeof clientLoader>();
+  const submit = useSubmit();
   console_dbg('App Home');
   console_dbg('contacts: ');
   console_dbg(JSON.stringify(contacts));
@@ -185,6 +190,9 @@ export default function App() {
           urlFocusContactId={focusContactId}
           isDescriptPage={isDescriptPage}
           navigate={navigate}
+          Form={Form}
+          searchDefaultValue={q}
+          submit={submit}
         >
           <Outlet />
         </Drawer>

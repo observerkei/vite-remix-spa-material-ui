@@ -60,9 +60,13 @@ const fakeContacts = {
     }
 };
 
-export async function getContacts(): Promise<ContactRecord[]> {
+export async function getContacts(query?: string | null): Promise<ContactRecord[]> {
     await new Promise((resolve) => setTimeout(resolve, 500));
     let contacts = await fakeContacts.getAll();
+    if (query) {
+        contacts = contacts.filter((contact) => contact?.name?.includes(query))
+        console_dbg('q contacts: ', contacts);
+    }
     return contacts;
 }
 

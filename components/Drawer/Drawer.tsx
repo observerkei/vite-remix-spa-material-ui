@@ -105,7 +105,10 @@ type DrawerParams = {
     children: React.ReactElement;
     urlFocusContactId: string;
     isDescriptPage: boolean;
-    navigate: (a: string) => a;
+    navigate: any;
+    Form: any;
+    searchDefaultValue: string;
+    submit: any;
 };
 
 export default function PersistentDrawerLeft({
@@ -114,9 +117,13 @@ export default function PersistentDrawerLeft({
     urlFocusContactId,
     isDescriptPage,
     navigate,
+    Form,
+    searchDefaultValue,
+    submit
 }: DrawerParams) {
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const isDesktop = useMediaQuery({ minWidth: desktopMinWidth }); 
+    const [open, setOpen] = React.useState(isDesktop ? true : false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -223,7 +230,11 @@ export default function PersistentDrawerLeft({
                 open={open}
             >
                 <DrawerHeader>
-                    <SearchBar />
+                    <SearchBar 
+                        Form={Form} 
+                        searchDefaultValue={searchDefaultValue}
+                        submit={submit}
+                    />
                     <IconButton onClick={() => {
                         if (focusContact?.id && focusContact.id.length !== 0) {
                             if (isMobile) {
