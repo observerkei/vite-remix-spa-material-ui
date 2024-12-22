@@ -126,7 +126,7 @@ export default function PersistentDrawerLeft({
 }: DrawerParams) {
     const theme = useTheme();
     const isDesktop = useMediaQuery({ minWidth: desktopMinWidth }); 
-    const localOpen = getLocalData(OPEN_DRAWER);
+    const localOpen = getLocalData(OPEN_DRAWER, false);
     const [open, setOpen] = React.useState(localOpen);
 
     const handleOpenDrawer = (open: boolean) => {

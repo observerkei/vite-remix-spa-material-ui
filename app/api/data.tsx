@@ -93,9 +93,13 @@ export async function deleteContact(id: string): Promise<null> {
 
 export const OPEN_DRAWER = 'openDrawer';
 
-export function getLocalData(key: string) {
+export function getLocalData(key: string, defaultValue: any) {
     const value = localStorage.getItem(key);
-    return JSON.parse(value || '');
+    if (value && value.length > 0) {
+        return JSON.parse(value);
+    }
+
+    return defaultValue;
 }
 
 export function setLocalData(key: string, value: any) {
