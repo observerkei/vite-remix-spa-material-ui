@@ -14,7 +14,7 @@ import { console_dbg } from '@/app/api/util';
 export const clientLoader = async ({
   params,
 }: LoaderFunctionArgs) => {
-  console_dbg('load');
+  console_dbg('c loader');
   console_dbg(params.contactId as string);
   const contact = await getContact(params.contactId as string);
   

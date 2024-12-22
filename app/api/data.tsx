@@ -4,10 +4,10 @@ import invariant from "tiny-invariant";
 import { console_dbg } from '@/app/api/util';
 
 
-type ContactInfoType = {
+export type ContactInfoType = {
     id?: string;
     name?: string;
-    description: string;
+    description?: string;
     profilePictureURI?: string;
     descriptionURI?: string;
     favorite?: boolean;

@@ -1,18 +1,23 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import {
-  Form,
-} from "@remix-run/react";
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import { desktopMinWidth } from '@/components/Drawer/Drawer';
 import { useMediaQuery } from 'react-responsive';
 import { ContactRecord } from '~/api/data';
 import { console_dbg } from '~/api/util';
+import {
+  Form,
+} from "@remix-run/react";
 
 
-export default function ContactInfoEdit({ contact }: { contact: ContactRecord }) {
+type ContactInfoEditParam = {
+  contact: ContactRecord;
+  Form: any;
+}
+
+export default function ContactInfoEdit({ contact }: ContactInfoEditParam) {
   const [editContact, setEditContact] = React.useState({} as ContactRecord);
   const isDesktop = useMediaQuery({ minWidth: desktopMinWidth });
 
@@ -50,31 +55,36 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
           flexDirection: 'column',
           alignItems: 'center',
         }}>
-          
+
           <Avatar
-            alt={`Avatar n°${editContact.id}-1`}
+            alt={`Avatar n°${editContact?.id}-1`}
             src={editContact?.profilePictureURI || ""}
-            style= {{
+            style={{
               width: 200,
               height: 200,
             }}
           />
 
-          <Form id="contact-from" role="send" style={{
-            display: 'flex',
-            flexDirection: 'column',
-            maxWidth: isDesktop ? '800px' : '600px',
-            width: '100%',
-            flexGrow: 1,
-            margin: 50,
-
-          }}>
+          <Form
+            id="contact-from"
+            role="post"
+            action={`/c/${contact?.id}/edit`}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              maxWidth: isDesktop ? '800px' : '600px',
+              width: '100%',
+              flexGrow: 1,
+              margin: 50,
+            }}
+          >
 
             <TextField
               id="standard-basic"
               label="Account name"
               variant="standard"
-              value={editContact?.name || ""}
+              name="name"
+              value={"123"}
             />
             <br />
 
@@ -82,15 +92,17 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
               id="standard-basic"
               label="Profile picture"
               variant="standard"
-              value={editContact?.profilePictureURI || ""} 
+              name="profilePictureURI"
+              defaultValue={editContact?.profilePictureURI || ""}
             />
             <br />
-            
+
             <TextField
               id="standard-basic"
               label="Description Page"
               variant="standard"
-              value={editContact?.descriptionURI || ""}
+              name="descriptionURI"
+              defaultValue={editContact?.descriptionURI || ""}
             />
             <br />
 
@@ -99,10 +111,14 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
               label="Description"
               multiline
               rows={4}
-              value={editContact?.description || ""}
-              variant="standard" 
-              />
+              name="description"
+              defaultValue={editContact?.description || ""}
+              variant="standard"
+            />
             <br />
+
+            <Button variant="contained" type="submit">Save</Button>
+
 
           </Form>
 
@@ -112,15 +128,10 @@ export default function ContactInfoEdit({ contact }: { contact: ContactRecord })
           display: 'flex',
           gap: '50px',
         }}>
-        
-        <Form method="post" style={{ alignSelf: 'center', }}>
-          <Button variant="contained" type="submit">Save</Button>
-        </Form>
 
-        
-        <Form method="post" action={`/c/${contact.id}/delete`} style={{ alignSelf: 'center', }}>
-          <Button color='error' variant="contained" type="submit">Delete</Button>
-        </Form>
+          <Form method="post" action={`/c/${contact?.id}/delete`} style={{ alignSelf: 'center', }}>
+            <Button color='error' variant="contained" >Delete</Button>
+          </Form>
         </Box>
 
       </Box>

@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => [
 export const clientLoader = async ({
   params,
 }: LoaderFunctionArgs) => {
-  console_dbg('index load');
+  console_dbg('index loader');
   console_dbg(params.contactId as string);
   console_dbg('contactId: ', params.contactId as string)
   const contact = await getContact(params.contactId as string);
