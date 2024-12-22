@@ -11,7 +11,7 @@ import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import IconButton from '@mui/material/IconButton';
-import ContactList from '@/components/Contact/ContactList';
+import ContactList, { CustomWidthTooltip } from '@/components/Contact/ContactList';
 
 import SearchBar from '../SearchBar/SearchBar';
 import CreateIcon from '@mui/icons-material/Create';
@@ -21,12 +21,16 @@ import { useMediaQuery } from 'react-responsive';
 import { console_dbg } from '@/app/api/util';
 import {
     ContactRecord,
+    HOME_PAGE,
     OPEN_DRAWER,
+    PageType,
     getLocalData,
     setLocalData,
 } from '~/api/data';
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
+import { TextField } from '@mui/material';
+import HomeSetting from './DrawerAppbarHomeSetting';
 
 export const drawerWidth = 240;
 export const mobileMaxWidth = 600;
@@ -107,7 +111,7 @@ type DrawerParams = {
     contacts: ContactRecord[];
     children: React.ReactElement;
     urlFocusContactId: string;
-    isDescriptPage: boolean;
+    pageType: PageType;
     navigate: any;
     Form: any;
     searchDefaultValue: string;
@@ -118,20 +122,28 @@ export default function PersistentDrawerLeft({
     contacts,
     children,
     urlFocusContactId,
-    isDescriptPage,
+    pageType,
     navigate,
     Form,
     searchDefaultValue,
-    submit
+    submit,
 }: DrawerParams) {
     const theme = useTheme();
-    const isDesktop = useMediaQuery({ minWidth: desktopMinWidth }); 
+    const isDesktop = useMediaQuery({ minWidth: desktopMinWidth });
     const localOpen = getLocalData(OPEN_DRAWER, false);
+    const localHomePage = getLocalData(HOME_PAGE, "");
     const [open, setOpen] = React.useState(localOpen);
+    const [hideHomeSetting, setHideHomeSetting] = React.useState(true);
+    const [homePage, setHomePage] = React.useState(localHomePage);
 
     const handleOpenDrawer = (open: boolean) => {
         setOpen(open);
         setLocalData(OPEN_DRAWER, open);
+    };
+
+    const handleSetHomePage = (home: string) => {
+        setHomePage(home);
+        setLocalData(HOME_PAGE, home);
     };
 
     const handleDrawerOpen = () => {
@@ -157,8 +169,8 @@ export default function PersistentDrawerLeft({
 
     const isMobile = useMediaQuery({ maxWidth: mobileMaxWidth });
     const focusContactDescriptURL = focusContact?.descriptionURI || "";
-    const focusContactId = focusContact?.id || ""; 
- 
+    const focusContactId = focusContact?.id || "";
+
     const appHeadText = focusContact?.name || "Favorite collection";
 
     return (
@@ -180,38 +192,52 @@ export default function PersistentDrawerLeft({
                     >
                         <MenuIcon />
                     </IconButton>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={() => 
-                            window.location.href = focusContact.descriptionURI as string
-                        }
-                        sx={[
-                            {
-                                mr: 2,
-                            },
-                            !(isDescriptPage && focusContactDescriptURL.length > 0) && { display: 'none' },
-                        ]}
-                    >
-                        <AspectRatioIcon />
-                    </IconButton>
+                    <CustomWidthTooltip title={"Cover the window"} placement={'bottom'} arrow>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            edge="start"
+                            onClick={() =>
+                                window.location.href = focusContact.descriptionURI as string
+                            }
+                            sx={[
+                                {
+                                    mr: 2,
+                                },
+                                !(pageType === PageType.CONTACT_DESCRIPT && focusContactDescriptURL.length > 0) && { display: 'none' },
+                            ]}
+                        >
+                            <AspectRatioIcon />
+                        </IconButton>
+                    </CustomWidthTooltip>
 
-                    <Box sx={{
-                        flexGrow: 1,
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                    }}>
+                    <HomeSetting 
+                        pageType={pageType}
+                        hideHomeSetting={hideHomeSetting} 
+                        setHideHomeSetting={setHideHomeSetting}
+                        homePage={homePage}
+                        setHomePage={handleSetHomePage}
+                    />
+
+                    <Box sx={[
+                        {
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                        },
+                        hideHomeSetting && {
+                            width: '100%',
+                        }
+                    ]}>
                         <Typography variant="h6" noWrap component="div" >
-                            {appHeadText}
+                            {hideHomeSetting && appHeadText}
                         </Typography>
 
                         <ToggleColorMode />
                     </Box>
                 </Toolbar>
             </AppBar>
-            
+
             <Drawer
                 sx={{
                     width: drawerWidth,
@@ -229,8 +255,8 @@ export default function PersistentDrawerLeft({
                 open={open}
             >
                 <DrawerHeader>
-                    <SearchBar 
-                        Form={Form} 
+                    <SearchBar
+                        Form={Form}
                         searchDefaultValue={searchDefaultValue}
                         submit={submit}
                     />
@@ -250,9 +276,13 @@ export default function PersistentDrawerLeft({
                         <CreateIcon />
                     </IconButton>
 
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-                    </IconButton>
+                    <CustomWidthTooltip title={'Close Sidebar'} placement={'bottom'} arrow>
+
+
+                        <IconButton onClick={handleDrawerClose}>
+                            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                        </IconButton>
+                    </CustomWidthTooltip>
 
                 </DrawerHeader>
                 <Divider />

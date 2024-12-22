@@ -21,7 +21,8 @@ import './tailwind.css'
 import {
   getContacts,
   createEmptyContact,
-  getContact
+  getContact,
+  PageType
 } from "~/api/data";
 import { console_dbg } from '@/app/api/util';
 import Drawer from '@/components/Drawer/Drawer';
@@ -149,10 +150,14 @@ export const clientLoader = async ({
 }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
+  let pageType = PageType.UNDEFINE;
 
   const contacts = await getContacts(q);
   var focusContactId = "";
-  var isDescriptPage = false;
+
+  if (url.pathname === '/') {
+    pageType = PageType.HOME;
+  }
   
   console_dbg('root loader url: ', url.pathname)
   if (url.pathname.startsWith("/c/")) {
@@ -160,16 +165,18 @@ export const clientLoader = async ({
     // After dividing by "/c/", take the part before /
     focusContactId = parts[1] as string; 
     console_dbg('param path: ', JSON.stringify(parts));
-    if (parts.length == 2) {
-      isDescriptPage = true;
+    if (parts.length == 2 ) {
+      pageType = PageType.CONTACT_DESCRIPT;
+    } else if (parts.length == 3 && parts[2].endsWith('edit')) {
+      pageType = PageType.CONTACT_EDIT
     }
   }
 
   return Response.json({ 
     contacts, 
     focusContactId, 
-    isDescriptPage, 
-    q 
+    pageType, 
+    q,
   });
 };
 
@@ -180,7 +187,7 @@ export default function App() {
   const { 
     contacts, 
     focusContactId, 
-    isDescriptPage, 
+    pageType, 
     q 
   } = useLoaderData<typeof clientLoader>();
   const navigate = useNavigate();
@@ -190,7 +197,6 @@ export default function App() {
   console_dbg('contacts: ');
   console_dbg(JSON.stringify(contacts));
   console_dbg('focusContactId: ', JSON.stringify(focusContactId));
-  console_dbg('isDescriptPage: ', JSON.stringify(isDescriptPage));
 
   return (
     <Document>
@@ -198,7 +204,7 @@ export default function App() {
         <Drawer
           contacts={contacts}
           urlFocusContactId={focusContactId}
-          isDescriptPage={isDescriptPage}
+          pageType={pageType}
           navigate={navigate}
           Form={Form}
           searchDefaultValue={q}

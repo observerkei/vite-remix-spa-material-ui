@@ -3,7 +3,7 @@ import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { console_dbg } from '~/api/util';
-import { getContact } from '~/api/data';
+import { getContact, getLocalData, HOME_PAGE, setLocalData } from '~/api/data';
 import ContactInfo from '@/components/Contact/ContactInfo';
 
 // https://remix.run/docs/en/main/route/meta
@@ -13,23 +13,14 @@ export const meta: MetaFunction = () => [
 ];
 
 
-export const clientLoader = async ({
-  params,
-}: LoaderFunctionArgs) => {
-  console_dbg('index loader');
-  console_dbg(params.contactId as string);
-  console_dbg('contactId: ', params.contactId as string)
-  const contact = await getContact(params.contactId as string);
-  return Response.json({ contact });
-};
-
-
-
 // https://remix.run/docs/en/main/file-conventions/routes#basic-routes
 export default function Index() {
+  let localHomePage = getLocalData(HOME_PAGE, "");
+  console_dbg('home get page: ', localHomePage);
+  
   return (
     <React.Fragment>
-      <ContactInfo contactId='observerkei' descriptionURI='https://observerkei.top' />
+      <ContactInfo contactId={`home-${localHomePage}`} descriptionURI={localHomePage} />
     </React.Fragment>
   );
 }

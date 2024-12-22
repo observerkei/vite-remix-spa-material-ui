@@ -92,6 +92,7 @@ export async function deleteContact(id: string): Promise<null> {
 }
 
 export const OPEN_DRAWER = 'openDrawer';
+export const HOME_PAGE = 'homePage';
 
 export function getLocalData(key: string, defaultValue: any) {
     const value = localStorage.getItem(key);
@@ -104,6 +105,13 @@ export function getLocalData(key: string, defaultValue: any) {
 
 export function setLocalData(key: string, value: any) {
     localStorage.setItem(key, JSON.stringify(value));
+}
+
+export enum PageType {
+    UNDEFINE = "UNDEFINE",
+    HOME = "Home Page",
+    CONTACT_EDIT = "Contact Edit Page",
+    CONTACT_DESCRIPT = "Discript Page",
 }
 
 
@@ -145,5 +153,12 @@ export function dataInit() {
                 }))
             //console_dbg(fakeContacts.records)
         }
+    }
+
+    let localHomePage = getLocalData(HOME_PAGE, null);
+    console_dbg('localHomePage: ', JSON.stringify(localHomePage));
+    if (localHomePage === null) {
+        setLocalData(HOME_PAGE, 'https://observerkei.top')
+        localHomePage = 'https://observerkei.top';
     }
 }

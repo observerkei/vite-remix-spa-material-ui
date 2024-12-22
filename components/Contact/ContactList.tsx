@@ -28,7 +28,7 @@ import { console_dbg } from '@/app/api/util';
 import Box from '@mui/material/Box';
 
 
-const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+export const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))({
   [`& .${tooltipClasses.tooltip}`]: {
@@ -130,6 +130,9 @@ export default function CheckboxListSecondary({
 function Favorite({ contact, handleToggle, labelId }: { contact: ContactRecord, labelId: string }) {
   return (
     <>
+                  <CustomWidthTooltip title={"Set Favorite"} placement={'right'} arrow>
+
+
       <Checkbox
         checkedIcon={<FavoriteIcon sx={{ color: pink[500] }} />}
         icon={<FavoriteBorderIcon />}
@@ -138,6 +141,8 @@ function Favorite({ contact, handleToggle, labelId }: { contact: ContactRecord, 
         checked={contact.favorite}
         inputProps={{ 'aria-labelledby': labelId }}
       />
+                  </CustomWidthTooltip>
+
     </>
   )
 }

@@ -7,6 +7,7 @@ import {
 } from "@remix-run/react";
 import { mobileMaxWidth } from "./Drawer";
 import { useMediaQuery } from 'react-responsive';
+import { CustomWidthTooltip } from "../Contact/ContactList";
 
 export const appBottomHeight = 64;
 
@@ -38,20 +39,24 @@ export default function DrawerBottom({ handleDrawerClose }: { handleDrawerClose:
                     justifyContent: 'center',
                     flexGrow: 1,
                 }}>
-                    <Button
-                        variant="outlined"
-                        startIcon={<AddIcon />}
-                        type="submit"
-                        sx={{
-                            flexGrow: 1,
-                            width: '100%',
-                            borderRadius: 28,
-                        }}
-                        
-                        onClick={closeDrawer}
-                    >
-                        ADD
-                    </Button>
+                    <CustomWidthTooltip title={"Add New Favorite"} placement={'top'} arrow>
+
+                        <Button
+                            variant="outlined"
+                            startIcon={<AddIcon />}
+                            type="submit"
+                            sx={{
+                                flexGrow: 1,
+                                width: '100%',
+                                borderRadius: 28,
+                            }}
+
+                            onClick={closeDrawer}
+                        >
+                            ADD
+                        </Button>
+                    </CustomWidthTooltip>
+
 
                 </Form>
             </Box>

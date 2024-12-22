@@ -6,7 +6,7 @@ export function console_dbg(...params: any[]): void {
 
     try {
         throw new Error();
-    } catch (error) {
+    } catch (error: any) {
         // Get stack info
         const stackLines = error.stack ? error.stack.split("\n") : [];
         let functionName = "anonymous";
