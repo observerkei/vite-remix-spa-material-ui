@@ -153,7 +153,8 @@ export const clientLoader = async ({
   console_dbg('root loader url: ', url.pathname)
   if (url.pathname.startsWith("/c/")) {
     const parts = url.pathname.split('/').filter(part => part !== '');
-    focusContactId = parts[1] as string; // 按 "/c/" 分割后，再取 / 之前的部分
+    // After dividing by "/c/", take the part before /
+    focusContactId = parts[1] as string; 
     console_dbg('param path: ', JSON.stringify(parts));
     if (parts.length == 2) {
       isDescriptPage = true;

@@ -7,7 +7,7 @@ export function console_dbg(...params: any[]): void {
     try {
         throw new Error();
     } catch (error) {
-        // 获取堆栈信息
+        // Get stack info
         const stackLines = error.stack ? error.stack.split("\n") : [];
         let functionName = "anonymous";
         let lineNumber = "unknown line";
@@ -15,12 +15,12 @@ export function console_dbg(...params: any[]): void {
         for (let i = 0; i < stackLines.length; i++) {
             const line = stackLines[i].trim();
 
-            // 过滤掉当前函数本身的堆栈信息
+            // Filter out the stack information of the current function itself
             if (line.includes("console_dbg")) {
                 continue;
             }
 
-            // 处理不同浏览器的堆栈格式
+            // Handle stack formats for different browsers
             const chromePattern = /at (\S+) \((.*?):(\d+):\d+\)/;
             const safariPattern = /at (.*?)(?: \((.*?):(\d+):\d+\))?/;
 
@@ -33,7 +33,7 @@ export function console_dbg(...params: any[]): void {
             }
         }
 
-        // 输出日志，带有函数名和行号
+        // Log output with function name and line number
         console.log(`[${functionName}:${lineNumber}]`, ...params);
     }
 }

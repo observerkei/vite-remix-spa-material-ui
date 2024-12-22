@@ -37,102 +37,103 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
 
       }}>
 
-        <Box sx={isDesktop ? {
-          '& > :not(style)': { m: 1 },
-          display: 'flex',
-          flexGrow: 1,
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        } : {
-          '& > :not(style)': { m: 1 },
-          display: 'flex',
-          flexGrow: 1,
-          width: '100%',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}>
+        <Form
+          id="contact-from"
+          method="post"
+          action={`/c/${contact?.id}/edit`}
+          style={{
+            width: '100%',
+          }}
+        >
 
-          <Avatar
-            alt={`Avatar n°${editContact?.id}-1`}
-            src={editContact?.profilePictureURI || ""}
-            style={{
-              width: 200,
-              height: 200,
-            }}
-          />
+          <Box sx={isDesktop ? {
+            '& > :not(style)': { m: 1 },
+            display: 'flex',
+            flexGrow: 1,
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          } : {
+            '& > :not(style)': { m: 1 },
+            display: 'flex',
+            flexGrow: 1,
+            width: '100%',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
 
-          <Form
-            id="contact-from"
-            method="post"
-            action={`/c/${contact?.id}/edit`}
-            style={{
+            <Avatar
+              alt={`Avatar n°${editContact?.id}-1`}
+              src={editContact?.profilePictureURI || ""}
+              style={{
+                width: 200,
+                height: 200,
+                margin: '50px',
+              }}
+            />
+            
+            <Box sx={{
               display: 'flex',
               flexDirection: 'column',
               maxWidth: isDesktop ? '800px' : '600px',
               width: '100%',
               flexGrow: 1,
-              margin: 50,
-            }}
-          >
+            }}>
 
-            <TextField
-              id="standard-basic"
-              label="Account name"
-              variant="standard"
-              name="name"
-              value={"123"}
-            />
-            <br />
+              <TextField
+                id="standard-basic"
+                label="Account name"
+                variant="standard"
+                name="name"
+                value={"123"}
+              />
+              <br />
 
-            <TextField
-              id="standard-basic"
-              label="Profile picture"
-              variant="standard"
-              name="profilePictureURI"
-              defaultValue={editContact?.profilePictureURI || ""}
-            />
-            <br />
+              <TextField
+                id="standard-basic"
+                label="Profile picture"
+                variant="standard"
+                name="profilePictureURI"
+                defaultValue={editContact?.profilePictureURI || ""}
+              />
+              <br />
 
-            <TextField
-              id="standard-basic"
-              label="Description Page"
-              variant="standard"
-              name="descriptionURI"
-              defaultValue={editContact?.descriptionURI || ""}
-            />
-            <br />
+              <TextField
+                id="standard-basic"
+                label="Description Page"
+                variant="standard"
+                name="descriptionURI"
+                defaultValue={editContact?.descriptionURI || ""}
+              />
+              <br />
 
-            <TextField
-              id="standard-multiline-static"
-              label="Description"
-              multiline
-              rows={4}
-              name="description"
-              defaultValue={editContact?.description || ""}
-              variant="standard"
-            />
-            <br />
+              <TextField
+                id="standard-multiline-static"
+                label="Description"
+                multiline
+                rows={4}
+                name="description"
+                defaultValue={editContact?.description || ""}
+                variant="standard"
+              />
+              <br />
+            </Box>
+          </Box>
 
-            <Button variant="contained" type="submit">Save</Button>
+          <Box sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '50px',
+          }}>
+            <Button variant="contained" type="submit" >Save</Button>
 
+            <Form method="post" action={`/c/${contact?.id}/delete`} >
+              <Button color='error' variant="contained" >Delete</Button>
+            </Form>
+          </Box>
 
-          </Form>
-
-        </Box>
-
-        <Box sx={{
-          display: 'flex',
-          gap: '50px',
-        }}>
-
-          <Form method="post" action={`/c/${contact?.id}/delete`} style={{ alignSelf: 'center', }}>
-            <Button color='error' variant="contained" >Delete</Button>
-          </Form>
-        </Box>
-
+        </Form>
       </Box>
-
     </>
   );
 }
