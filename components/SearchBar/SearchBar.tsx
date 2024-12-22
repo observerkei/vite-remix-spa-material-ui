@@ -2,6 +2,7 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import { console_dbg } from '~/api/util';
 import { useLocation } from 'react-router-dom';
+import { CustomWidthTooltip } from '../Contact/ContactList';
 
 
 type SearchBarParams = {
@@ -26,9 +27,9 @@ export default function SearchBar({ Form, searchDefaultValue, submit }: SearchBa
 
   return (
     <>
-      <Form 
-        key={`search-${searchDefaultValue}`} 
-        id="search-form" 
+      <Form
+        key={`search-${searchDefaultValue}`}
+        id="search-form"
         role="search"
         action={pathName}
         onChange={(event: any) => {
@@ -39,23 +40,26 @@ export default function SearchBar({ Form, searchDefaultValue, submit }: SearchBa
         }
         }
       >
-        <TextField
-          id="q"
-          name="q"
-          type="search"
-          size="small"
-          label="Search"
-          onChange={(event) => setQuery(event.currentTarget.value)}
-          autoFocus={searchDefaultValue?.length > 0 ? true : false}
-          slotProps={{
-            input: { sx: { borderRadius: 20 } },
-          }}
-          value={query}
-        />
-         <div
-            aria-hidden
-            id="search-spinner"
+        <CustomWidthTooltip title={'Search Favorite'} placement={'bottom'} arrow>
+          <TextField
+            id="q"
+            name="q"
+            type="search"
+            size="small"
+            label="Search"
+            onChange={(event) => setQuery(event.currentTarget.value)}
+            autoFocus={searchDefaultValue?.length > 0 ? true : false}
+            slotProps={{
+              input: { sx: { borderRadius: 20 } },
+            }}
+            value={query}
           />
+        </CustomWidthTooltip>
+
+        <div
+          aria-hidden
+          id="search-spinner"
+        />
       </Form>
     </>
   );

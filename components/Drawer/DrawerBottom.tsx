@@ -39,8 +39,7 @@ export default function DrawerBottom({ handleDrawerClose }: { handleDrawerClose:
                     justifyContent: 'center',
                     flexGrow: 1,
                 }}>
-                    <CustomWidthTooltip title={"Add New Favorite"} placement={'top'} arrow>
-
+                    <CustomWidthTooltip title={"Add Favorite"} placement={'top'} arrow>
                         <Button
                             variant="outlined"
                             startIcon={<AddIcon />}

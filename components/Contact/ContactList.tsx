@@ -32,7 +32,8 @@ export const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps)
   <Tooltip {...props} classes={{ popper: className }} />
 ))({
   [`& .${tooltipClasses.tooltip}`]: {
-    maxWidth: 300,
+    maxWidth: 200,
+    borderRadius: 28,
   },
 });
 
@@ -130,18 +131,16 @@ export default function CheckboxListSecondary({
 function Favorite({ contact, handleToggle, labelId }: { contact: ContactRecord, labelId: string }) {
   return (
     <>
-                  <CustomWidthTooltip title={"Set Favorite"} placement={'right'} arrow>
-
-
-      <Checkbox
-        checkedIcon={<FavoriteIcon sx={{ color: pink[500] }} />}
-        icon={<FavoriteBorderIcon />}
-        edge="end"
-        onChange={handleToggle(contact)}
-        checked={contact.favorite}
-        inputProps={{ 'aria-labelledby': labelId }}
-      />
-                  </CustomWidthTooltip>
+      <CustomWidthTooltip title={"Mark as like"} placement={'right'} arrow>
+        <Checkbox
+          checkedIcon={<FavoriteIcon sx={{ color: pink[500] }} />}
+          icon={<FavoriteBorderIcon />}
+          edge="end"
+          onChange={handleToggle(contact)}
+          checked={contact.favorite}
+          inputProps={{ 'aria-labelledby': labelId }}
+        />
+      </CustomWidthTooltip>
 
     </>
   )

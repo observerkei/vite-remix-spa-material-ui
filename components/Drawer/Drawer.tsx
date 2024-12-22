@@ -210,9 +210,9 @@ export default function PersistentDrawerLeft({
                         </IconButton>
                     </CustomWidthTooltip>
 
-                    <HomeSetting 
+                    <HomeSetting
                         pageType={pageType}
-                        hideHomeSetting={hideHomeSetting} 
+                        hideHomeSetting={hideHomeSetting}
                         setHideHomeSetting={setHideHomeSetting}
                         homePage={homePage}
                         setHomePage={handleSetHomePage}
@@ -259,21 +259,24 @@ export default function PersistentDrawerLeft({
                         searchDefaultValue={searchDefaultValue}
                         submit={submit}
                     />
-                    <IconButton onClick={() => {
-                        if (focusContact?.id && focusContact.id.length !== 0) {
-                            if (isMobile) {
-                                handleDrawerClose();
-                            }
 
-                            navigate(`/c/${focusContact.id}/edit`);
-                        }
-                    }}
-                        sx={[
-                            !(focusContactId.length > 0) && { display: 'none' },
-                        ]}
-                    >
-                        <CreateIcon />
-                    </IconButton>
+                    <CustomWidthTooltip title={'Edit Favorite'} placement={'bottom'} arrow>
+                        <IconButton onClick={() => {
+                            if (focusContact?.id && focusContact.id.length !== 0) {
+                                if (isMobile) {
+                                    handleDrawerClose();
+                                }
+
+                                navigate(`/c/${focusContact.id}/edit`);
+                            }
+                        }}
+                            sx={[
+                                !(focusContactId.length > 0) && { display: 'none' },
+                            ]}
+                        >
+                            <CreateIcon />
+                        </IconButton>
+                    </CustomWidthTooltip>
 
                     <CustomWidthTooltip title={'Close Sidebar'} placement={'bottom'} arrow>
 

@@ -13,9 +13,9 @@ type params = {
     setHomePage: any;
 }
 
-export default function HomeSetting({ 
-    pageType, 
-    setHideHomeSetting, 
+export default function HomeSetting({
+    pageType,
+    setHideHomeSetting,
     hideHomeSetting,
     homePage,
     setHomePage,
@@ -42,33 +42,34 @@ export default function HomeSetting({
             </CustomWidthTooltip>
 
             {
-                !hideHomeSetting && <TextField
-                    key={`home-${homePage}`}
-                    id="outlined-basic"
-                    label="Home Page"
-                    variant="outlined"
-                    size="small"
-                    autoFocus={true}
-                    autoComplete="off"
-                    onKeyDown={(event) => {
-                        if (event.key === "Enter") {
-                            setHomePage(query);
-                            console_dbg('pass Enter: ', query);
-                            window.location.reload();
-                        }
-                    }}
-                    onChange={(event) => setQuery(event.currentTarget.value)}
-                    defaultValue={query}
-                    onBlur={() => setHideHomeSetting(true)}
-                    slotProps={{
-                        input: { sx: { borderRadius: 20 } },
-                    }}
-                    sx={{
-                        flexGrow: 1,
-                        mr: 2,
-                    }}
-                />
-
+                !hideHomeSetting && <CustomWidthTooltip title={'Enter a new home page'} placement={'bottom'} arrow>
+                    <TextField
+                        key={`home-${homePage}`}
+                        id="outlined-basic"
+                        label="Home Page"
+                        variant="outlined"
+                        size="small"
+                        autoFocus={true}
+                        autoComplete="off"
+                        onKeyDown={(event) => {
+                            if (event.key === "Enter") {
+                                setHomePage(query);
+                                console_dbg('pass Enter: ', query);
+                                window.location.reload();
+                            }
+                        }}
+                        onChange={(event) => setQuery(event.currentTarget.value)}
+                        defaultValue={query}
+                        onBlur={() => setHideHomeSetting(true)}
+                        slotProps={{
+                            input: { sx: { borderRadius: 20 } },
+                        }}
+                        sx={{
+                            flexGrow: 1,
+                            mr: 2,
+                        }}
+                    />
+                </CustomWidthTooltip>
             }
         </>
     )
