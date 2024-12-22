@@ -34,7 +34,7 @@ export default function ContactPage() {
 
   return (
     <React.Fragment>
-        <ContactInfo contact={contact} />
+        <ContactInfo contactId={contact.id} descriptionURI={contact.descriptionURI} />
     </React.Fragment>
   );
 }
