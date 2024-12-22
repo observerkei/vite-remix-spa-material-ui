@@ -18,24 +18,27 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
   const [editContact, setEditContact] = React.useState({} as ContactRecord);
   const isDesktop = useMediaQuery({ minWidth: desktopMinWidth });
 
-  if (JSON.stringify(contact) !== JSON.stringify(editContact)) {
+  if (contact.id !== editContact.id) {
     setEditContact(contact);
+    console_dbg(`update edit contact`);
   }
-
   console_dbg(`input contact: ${JSON.stringify(contact)}`);
 
+  // Changing the key forces a reset of the component
   return (
     <>
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        flexGrow: '1',
-        alignSelf: 'stretch',
-        marginTop: '25px',
-        padding: '20px',
+      <Box
+        key={`${editContact.id}`}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          flexGrow: '1',
+          alignSelf: 'stretch',
+          marginTop: '25px',
+          padding: '20px',
 
-      }}>
+        }}>
 
         <Form
           id="contact-from"
@@ -43,6 +46,8 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
           action={`/c/${contact?.id}/edit`}
           style={{
             width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
 
@@ -71,7 +76,7 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
                 margin: '50px',
               }}
             />
-            
+
             <Box sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -85,7 +90,7 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
                 label="Account name"
                 variant="standard"
                 name="name"
-                value={"123"}
+                defaultValue={editContact?.name || ""}
               />
               <br />
 
@@ -119,20 +124,25 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
               <br />
             </Box>
           </Box>
-
-          <Box sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '50px',
-          }}>
+          <Box sx={{ alignSelf: 'center', marginLeft: '-150px' }}>
             <Button variant="contained" type="submit" >Save</Button>
-
-            <Form method="post" action={`/c/${contact?.id}/delete`} >
-              <Button color='error' variant="contained" >Delete</Button>
-            </Form>
           </Box>
 
         </Form>
+
+        <Box sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '50px',
+          marginTop: '-43px',
+          marginRight: '-150px',
+        }}>
+
+          <Form method="post" action={`/c/${contact?.id}/delete`} >
+            <Button color='error' variant="contained" >Delete</Button>
+          </Form>
+        </Box>
+
       </Box>
     </>
   );
