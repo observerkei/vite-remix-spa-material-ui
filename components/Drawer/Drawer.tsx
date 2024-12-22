@@ -42,11 +42,10 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
 }>(({ theme }) => ({
     display: 'flex',
-    flexGrow: 1,
     flexDirection: 'column',
     alignItems: 'stretch',
-
-    paddingBottom: theme.spacing(1),
+    flexGrow: 1,
+    padding: 0,
     transition: theme.transitions.create('margin', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -299,10 +298,7 @@ export default function PersistentDrawerLeft({
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                <Box sx={{ flexGrow: '1' }} >
-                    {children}
-                </Box>
-
+                {children}
             </Main>
         </Box>
     );
