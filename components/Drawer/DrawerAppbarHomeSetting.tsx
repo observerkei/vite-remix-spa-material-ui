@@ -42,7 +42,7 @@ export default function HomeSetting({
             </CustomWidthTooltip>
 
             {
-                !hideHomeSetting && <CustomWidthTooltip title={'Enter a new home page'} placement={'bottom'} arrow>
+                !hideHomeSetting && <CustomWidthTooltip title={'Add a home page that supports iframe'} placement={'bottom'} arrow>
                     <TextField
                         key={`home-${homePage}`}
                         id="outlined-basic"

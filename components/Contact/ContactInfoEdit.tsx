@@ -7,6 +7,7 @@ import { desktopMinWidth } from '@/components/Drawer/Drawer';
 import { useMediaQuery } from 'react-responsive';
 import { ContactRecord } from '~/api/data';
 import { console_dbg } from '~/api/util';
+import { CustomWidthTooltip } from './ContactList';
 
 
 type ContactInfoEditParam = {
@@ -111,13 +112,15 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
               />
               <br />
 
-              <TextField
-                id="standard-basic"
-                label="Description Page"
-                variant="standard"
-                name="descriptionURI"
-                defaultValue={editContact?.descriptionURI || ""}
-              />
+              <CustomWidthTooltip title={'Add a description page that supports iframe'} placement={'bottom'} arrow>
+                <TextField
+                  id="standard-basic"
+                  label="Description Page"
+                  variant="standard"
+                  name="descriptionURI"
+                  defaultValue={editContact?.descriptionURI || ""}
+                />
+              </CustomWidthTooltip>
               <br />
 
               <TextField
@@ -133,24 +136,24 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
             </Box>
           </Box>
 
-          <Box sx={{ 
-            display: 'flex', 
-            alignSelf: 'center', 
-            gap: '50px', 
+          <Box sx={{
+            display: 'flex',
+            alignSelf: 'center',
+            gap: '50px',
           }}>
-            <Button 
-              variant="contained" 
-              type="submit" 
-              onClick={() => handleActionChange(`/c/${editContact.id}/edit`)} 
+            <Button
+              variant="contained"
+              type="submit"
+              onClick={() => handleActionChange(`/c/${editContact.id}/edit`)}
               sx={{ width: '100px', borderRadius: 28 }}
             >
               Save
             </Button>
-            <Button 
-              color='error' 
-              variant="contained" 
-              type="submit" 
-              onClick={() => handleActionChange(`/c/${editContact.id}/delete`)} 
+            <Button
+              color='error'
+              variant="contained"
+              type="submit"
+              onClick={() => handleActionChange(`/c/${editContact.id}/delete`)}
               sx={{ width: '100px', borderRadius: 28 }}
             >
               Delete
