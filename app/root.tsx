@@ -15,7 +15,6 @@ import { unstable_useEnhancedEffect as useEnhancedEffect } from '@mui/material';
 import theme from './mui/theme';
 import ClientStyleContext from './mui/ClientStyleContext';
 import Layout from './mui/Layout';
-import Home from './home';
 import './tailwind.css'
 import {
   getContacts,
@@ -25,7 +24,6 @@ import {
 import { console_dbg } from '@/app/api/util';
 import Drawer from '@/components/Drawer/Drawer';
 import { LoaderFunctionArgs } from '@remix-run/node';
-import { json } from 'stream/consumers';
 
 interface DocumentProps {
   children: React.ReactNode;

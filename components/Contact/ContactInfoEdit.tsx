@@ -7,9 +7,6 @@ import { desktopMinWidth } from '@/components/Drawer/Drawer';
 import { useMediaQuery } from 'react-responsive';
 import { ContactRecord } from '~/api/data';
 import { console_dbg } from '~/api/util';
-import {
-  Form,
-} from "@remix-run/react";
 
 
 type ContactInfoEditParam = {
@@ -17,7 +14,7 @@ type ContactInfoEditParam = {
   Form: any;
 }
 
-export default function ContactInfoEdit({ contact }: ContactInfoEditParam) {
+export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam) {
   const [editContact, setEditContact] = React.useState({} as ContactRecord);
   const isDesktop = useMediaQuery({ minWidth: desktopMinWidth });
 
@@ -67,7 +64,7 @@ export default function ContactInfoEdit({ contact }: ContactInfoEditParam) {
 
           <Form
             id="contact-from"
-            role="post"
+            method="post"
             action={`/c/${contact?.id}/edit`}
             style={{
               display: 'flex',
