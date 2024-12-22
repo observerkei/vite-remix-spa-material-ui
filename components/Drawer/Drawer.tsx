@@ -159,10 +159,11 @@ export default function PersistentDrawerLeft({
         const nowFocusContact: ContactRecord[]
             = contacts.filter((c) => c.id == urlFocusContactId);
         if (nowFocusContact.length) {
-
             setFocusContact(nowFocusContact[0]);
             console_dbg("u f c id 2: ", JSON.stringify(nowFocusContact));
-
+        } else {
+            // clear old focus.
+            setFocusContact({ id: "" } as ContactRecord)
         }
     }
 
@@ -170,7 +171,11 @@ export default function PersistentDrawerLeft({
     const focusContactDescriptURL = focusContact?.descriptionURI || "";
     const focusContactId = focusContact?.id || "";
 
-    const appHeadText = focusContact?.name || "Favorite collection";
+    let appHeadText = focusContact?.name || "";
+    if (appHeadText.length === 0) {
+        appHeadText = "Favorite collection";
+    }
+    console_dbg("now appHeadText: ", appHeadText);
 
     return (
         <Box sx={{ display: 'flex', flexGrow: 1, }}>
@@ -231,7 +236,7 @@ export default function PersistentDrawerLeft({
                             width: '100%',
                         }
                     ]}>
-                        <Typography variant="h6" noWrap component="div" >
+                        <Typography key={`apphead-${appHeadText}`} variant="h6" noWrap component="div" >
                             {hideHomeSetting && appHeadText}
                         </Typography>
 
