@@ -177,20 +177,23 @@ export default function PersistentDrawerLeft({
             <CssBaseline />
             <AppBar position="fixed" open={open}>
                 <Toolbar >
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={[
-                            {
-                                mr: 2,
-                            },
-                            open && !isMobile && { display: 'none' },
-                        ]}
-                    >
-                        <MenuIcon />
-                    </IconButton>
+                    <CustomWidthTooltip title={"Open Sidebar"} placement={'bottom'} arrow>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            sx={[
+                                {
+                                    mr: 2,
+                                },
+                                open && !isMobile && { display: 'none' },
+                            ]}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </CustomWidthTooltip>
+
                     <CustomWidthTooltip title={"Cover the window"} placement={'bottom'} arrow>
                         <IconButton
                             color="inherit"
@@ -279,8 +282,6 @@ export default function PersistentDrawerLeft({
                     </CustomWidthTooltip>
 
                     <CustomWidthTooltip title={'Close Sidebar'} placement={'bottom'} arrow>
-
-
                         <IconButton onClick={handleDrawerClose}>
                             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                         </IconButton>

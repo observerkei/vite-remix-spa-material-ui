@@ -13,7 +13,7 @@ function ModeSwitcher() {
         <select
           value={mode}
           onChange={(event) => {
-            setMode(event.target.value as string);
+            setMode(event.target.value as typeof mode);
             // For TypeScript, cast `event.target.value as 'light' | 'dark' | 'system'`:
           }}
         >

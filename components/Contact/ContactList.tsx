@@ -128,7 +128,13 @@ export default function CheckboxListSecondary({
   );
 }
 
-function Favorite({ contact, handleToggle, labelId }: { contact: ContactRecord, labelId: string }) {
+type params = {
+  contact: ContactRecord;
+  labelId: string;
+  handleToggle: any;
+}
+
+function Favorite({ contact, handleToggle, labelId }: params) {
   return (
     <>
       <CustomWidthTooltip title={"Mark as like"} placement={'right'} arrow>
