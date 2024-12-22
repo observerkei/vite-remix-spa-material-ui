@@ -174,29 +174,22 @@ export default function PersistentDrawerLeft({
                     >
                         <MenuIcon />
                     </IconButton>
-                    <a
-                        href={`${focusContact.descriptionURI}`}
-                        rel="noopener noreferrer"
-                        style={{
-                            textDecoration: "none",
-                            color: "inherit"
-                        }}
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={() => 
+                            window.location.href = focusContact.descriptionURI as string
+                        }
+                        sx={[
+                            {
+                                mr: 2,
+                            },
+                            !(isDescriptPage && focusContactDescriptURL.length > 0) && { display: 'none' },
+                        ]}
                     >
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            edge="start"
-                            sx={[
-                                {
-                                    mr: 2,
-                                },
-                                !(isDescriptPage && focusContactDescriptURL.length > 0) && { display: 'none' },
-                            ]}
-                        >
-                            <AspectRatioIcon />
-                        </IconButton>
-                    </a>
-
+                        <AspectRatioIcon />
+                    </IconButton>
 
                     <Box sx={{
                         flexGrow: 1,
