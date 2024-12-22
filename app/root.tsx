@@ -165,7 +165,12 @@ export const clientLoader = async ({
     }
   }
 
-  return Response.json({ contacts, focusContactId, isDescriptPage, q });
+  return Response.json({ 
+    contacts, 
+    focusContactId, 
+    isDescriptPage, 
+    q 
+  });
 };
 
 

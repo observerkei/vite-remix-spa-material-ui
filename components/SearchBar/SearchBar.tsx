@@ -1,6 +1,7 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import { console_dbg } from '~/api/util';
+import { useLocation } from 'react-router-dom';
 
 
 type SearchBarParams = {
@@ -10,6 +11,8 @@ type SearchBarParams = {
 };
 
 export default function SearchBar({ Form, searchDefaultValue, submit }: SearchBarParams) {
+  const location = useLocation();
+  const pathName = location.pathname;
   // the query now needs to be kept in state
   const [query, setQuery] = React.useState(searchDefaultValue || "");
   // we still have a `useEffect` to synchronize the query
@@ -19,6 +22,7 @@ export default function SearchBar({ Form, searchDefaultValue, submit }: SearchBa
   }, [searchDefaultValue]);
 
   console_dbg('searchDefaultValue: ', JSON.stringify(searchDefaultValue));
+  console_dbg('location pathName: ', JSON.stringify(pathName));
 
   return (
     <>
@@ -26,6 +30,7 @@ export default function SearchBar({ Form, searchDefaultValue, submit }: SearchBa
         key={`search-${searchDefaultValue}`} 
         id="search-form" 
         role="search"
+        action={pathName}
         onChange={(event: any) => {
           const isFirstSearch = searchDefaultValue === null;
           submit(event.currentTarget, {
