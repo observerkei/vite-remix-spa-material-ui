@@ -22,6 +22,15 @@ export default function HomeSetting({
 }: params) {
     const [query, setQuery] = React.useState(homePage);
 
+    function handleEnter(event: React.KeyboardEvent<HTMLDivElement>) {
+        const EnterCode = 13;
+        if (event.key === "Enter" || event.keyCode === EnterCode) {
+            console_dbg('pass Enter: on Key Down');
+            setHomePage(query);
+            window.location.reload();
+        }
+    }
+
     return (
         <>
             <CustomWidthTooltip title={"Change Home Page"} placement={'bottom'} arrow>
@@ -45,22 +54,18 @@ export default function HomeSetting({
                 !hideHomeSetting && <CustomWidthTooltip title={'Add a home page that supports iframe'} placement={'bottom'} arrow>
                     <TextField
                         key={`home-${homePage}`}
-                        id="outlined-basic"
+                        id="home-page-setting"
                         label="Home Page"
                         variant="outlined"
                         size="small"
+                        type="search"
                         autoFocus={true}
                         autoComplete="off"
-                        onKeyDown={(event) => {
-                            if (event.key === "Enter") {
-                                setHomePage(query);
-                                console_dbg('pass Enter: ', query);
-                                window.location.reload();
-                            }
-                        }}
-                        onChange={(event) => setQuery(event.currentTarget.value)}
-                        defaultValue={query}
+                        value={query}
+                        onFocus={() => setQuery(homePage)}
                         onBlur={() => setHideHomeSetting(true)}
+                        onChange={(event) => setQuery(event.currentTarget.value)}
+                        onKeyDown={handleEnter}
                         slotProps={{
                             input: { sx: { borderRadius: 20 } },
                         }}
