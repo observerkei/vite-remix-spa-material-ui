@@ -40,7 +40,7 @@ export default function SearchBar({ Form, searchDefaultValue, submit }: SearchBa
         }
         }
       >
-        <CustomWidthTooltip title={'Search Favorite'} placement={'bottom'} arrow>
+        <CustomWidthTooltip title={'Search Favorite'} placement={'right'} arrow>
           <TextField
             id="q"
             name="q"
