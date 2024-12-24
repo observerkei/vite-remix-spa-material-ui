@@ -65,10 +65,10 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
             flexGrow: 1,
             width: '100%',
             alignItems: 'center',
-            justifyContent: 'space-around',
-            gap: '50px',
+            justifyContent: 'space-evenly',
             paddingLeft: '30px',
             paddingRight: '30px',
+            gap: '50px'
           } : {
             '& > :not(style)': { m: 1 },
             display: 'flex',
@@ -81,6 +81,7 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
           }}>
 
             <Avatar
+              key={`avatar-${editContact?.id}`}
               alt={`Avatar n°${editContact?.id}-1`}
               src={editContact?.profilePictureURI || ""}
               style={{
@@ -111,7 +112,10 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
                 label="Profile picture"
                 variant="standard"
                 name="profilePictureURI"
-                defaultValue={editContact?.profilePictureURI || ""}
+                value={editContact?.profilePictureURI || ""}
+                onChange={(event) => 
+                  setEditContact({...editContact, profilePictureURI: event.target.value})
+                }
               />
               <br />
 
