@@ -25,6 +25,7 @@ export default function SearchBar({ Form, searchDefaultValue, submit }: SearchBa
   console_dbg('searchDefaultValue: ', JSON.stringify(searchDefaultValue));
   console_dbg('location pathName: ', JSON.stringify(pathName));
 
+
   return (
     <>
       <Form
