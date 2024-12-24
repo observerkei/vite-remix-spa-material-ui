@@ -4,6 +4,10 @@ const { app, BrowserWindow } = require('electron');
 const http = require('http-server');
 const path = require('node:path');
 
+
+// ? route to index
+const creatHomeURL = (port) => `http://localhost:${port}?`;
+
 const getRandomPort = () => {
   const min = 1024;
   const max = 65535;
@@ -14,7 +18,7 @@ const startServer = (port, rootPath, count) => {
   let server;
   while (count < 1000) {
     try {
-      server = http.createServer({ root: rootPath });
+      server = http.createServer({ root: rootPath, proxy: creatHomeURL(port) });
       server.listen(port);
       console.log(`Server is running at http://localhost:${port}`);
       return port;
@@ -62,27 +66,15 @@ function createWindow() {
   })
 
   let port = 3000;
-  let homeURL = `http://localhost:${port}`;
+  let homeURL = creatHomeURL(port);
 
   // Different paths to adapt development mode and run mode
   if (app.isPackaged) { // pack
     port = startServer(getRandomPort(), path.join(process.resourcesPath, 'client'), 0);
-    homeURL = `http://localhost:${port}`;
+    homeURL = creatHomeURL(port);
   }
 
   win.loadURL(homeURL);
-
-  win.webContents.on('will-navigate', (event, url) => {
-    const parsedUrl = new URL(url);
-
-    if (parsedUrl.hostname === 'localhost' && parsedUrl.port !== port) {
-      event.preventDefault(); // disable navigate
-
-      console.log(`change port ${parsedUrl.port} to ${port}`);
-      parsedUrl.port = port;
-      win.loadURL(parsedUrl.toString());
-    }
-  });
 
   if (app.isPackaged) {
     win.once('ready-to-show', (event) => {
@@ -91,7 +83,6 @@ function createWindow() {
   } else {
     checkURLToShow(win, homeURL)
   }
-
 
   // Exit the application when the window closes
   win.on('close', (event) => {
