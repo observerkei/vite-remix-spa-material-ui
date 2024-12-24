@@ -8,7 +8,7 @@ export function console_dbg(...params: any[]): void {
         throw new Error();
     } catch (error: any) {
         // Get stack info
-        const stackLines = error.stack ? error.stack.split("\n") : [];
+        const stackLines = error.stack ? error.stack?.split("\n") : [];
         let functionName = "anonymous";
         let lineNumber = "unknown line";
 
