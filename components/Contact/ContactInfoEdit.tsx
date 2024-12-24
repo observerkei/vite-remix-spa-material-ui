@@ -65,7 +65,10 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
             flexGrow: 1,
             width: '100%',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'space-around',
+            gap: '50px',
+            paddingLeft: '30px',
+            paddingRight: '30px',
           } : {
             '& > :not(style)': { m: 1 },
             display: 'flex',
@@ -73,6 +76,8 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
             width: '100%',
             flexDirection: 'column',
             alignItems: 'center',
+            paddingLeft: '30px',
+            paddingRight: '30px',
           }}>
 
             <Avatar
@@ -81,8 +86,6 @@ export default function ContactInfoEdit({ contact, Form }: ContactInfoEditParam)
               style={{
                 width: 200,
                 height: 200,
-                marginLeft: '50px',
-                marginRight: '50px',
               }}
             />
 

@@ -21,6 +21,7 @@ import { useMediaQuery } from 'react-responsive';
 import { console_dbg } from '@/app/api/util';
 import {
     ContactRecord,
+    DEFAULT_TITLE,
     HOME_PAGE,
     OPEN_DRAWER,
     PageType,
@@ -36,7 +37,7 @@ export const drawerWidth = 240;
 export const mobileMaxWidth = 600;
 export const appBarHeight = 56;
 export const windowsMargin = 10;
-export const desktopMinWidth = 1200;
+export const desktopMinWidth = 1000;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     open?: boolean;
@@ -176,7 +177,7 @@ export default function PersistentDrawerLeft({
 
     let appHeadText = focusContact?.name || "";
     if (appHeadText.length === 0) {
-        appHeadText = "Favorite collection";
+        appHeadText = DEFAULT_TITLE;
     }
     console_dbg("now appHeadText: ", appHeadText);
 
