@@ -9,7 +9,10 @@ Build with Remix v2.51.1, Material UI v6.2.0 and fix build errors.
 ```shellscript
 git clone https://github.com/observerkei/remix-spa-material-ui.git
 cd remix-spa-material-ui
-npm install
+git checkout example-electron-http-server 
+
+yarn install
+
 ```
 
 ## Development
@@ -18,6 +21,7 @@ You can develop your SPA app just like you would a normal Remix app, via:
 
 ```shellscript
 npm run dev
+npm run edev
 ```
 
 ## Production
@@ -26,7 +30,11 @@ When you are ready to build a production version of your app, `npm run build` wi
 
 ```shellscript
 npm run build
+npm run emake
 ```
+
+electron pack dir: `./out/make/`
+
 
 ### Preview
 
