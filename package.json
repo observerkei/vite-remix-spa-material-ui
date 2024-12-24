@@ -10,7 +10,7 @@
   "version": "0.1.0",
   "scripts": {
     "build": "remix vite:build",
-    "dev": "remix vite:dev --host=0.0.0.0 --port=3000",
+    "dev": "remix vite:dev --host=0.0.0.0 --port=5173",
     "edev": "concurrently -n \"REMIX,ELECTRON\" -c \"yellow,blue\" --kill-others \"npm run dev\" \"electron .\"",
     "emake": "npm run build && electron-forge make",
     "epack": "electron-forge package",
