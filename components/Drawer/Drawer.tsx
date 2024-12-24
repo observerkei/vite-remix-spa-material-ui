@@ -18,7 +18,7 @@ import CreateIcon from '@mui/icons-material/Create';
 import DrawerBottom from './DrawerBottom';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { console_dbg } from '@/app/api/util';
+import { console_dbg, isEqual } from '@/app/api/util';
 import {
     ContactRecord,
     DEFAULT_TITLE,
@@ -30,7 +30,6 @@ import {
 } from '~/api/data';
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
-import { TextField } from '@mui/material';
 import HomeSetting from './DrawerAppbarHomeSetting';
 
 export const drawerWidth = 240;
@@ -154,21 +153,19 @@ export default function PersistentDrawerLeft({
         handleOpenDrawer(false)
     };
 
-    const [focusContact, setFocusContact] = useState({} as ContactRecord);
-    if (urlFocusContactId !== focusContact?.id) {
-        console_dbg('update url f c : ', urlFocusContactId);
-        console_dbg('focusContact: ', JSON.stringify(focusContact));
-        const nowFocusContact: ContactRecord[]
-            = contacts.filter((c) => c.id == urlFocusContactId);
-        if (nowFocusContact.length) {
-            setFocusContact(nowFocusContact[0]);
-            console_dbg("u f c id 2: ", JSON.stringify(nowFocusContact));
-        } else {
-            // clear old focus.
-            if (focusContact?.id !== "") {
-                setFocusContact({ id: "" } as ContactRecord)
-            }
+    const [focusContact, setFocusContact] = useState({ id: "" } as ContactRecord);
+    let nowFocusContact = { id: "" } as ContactRecord;
+    if (urlFocusContactId?.length > 0) {
+        const nowFocusContacts: ContactRecord[] = contacts.filter(
+            (c) => c.id === urlFocusContactId);
+        if (nowFocusContacts.length) {
+            nowFocusContact = nowFocusContacts[0];
         }
+    }
+    if (!isEqual(nowFocusContact, focusContact)) {
+        console_dbg(`update ${JSON.stringify(focusContact)} `,
+            `to ${JSON.stringify(nowFocusContact)}`)
+        setFocusContact(nowFocusContact);
     }
 
     const isMobile = useMediaQuery({ maxWidth: mobileMaxWidth });
