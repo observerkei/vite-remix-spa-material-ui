@@ -40,6 +40,9 @@ npm run preview
 >
 > `vite preview` is not designed for use as a production server
 
+![priview](./public/preview.gif)  
+
+
 ### Deployment
 
 You can then serve your app from any HTTP server of your choosing. The server should be configured to serve multiple paths from a single root `/index.html` file (commonly called "SPA fallback"). Other steps may be required if the server doesn't directly support this functionality.
