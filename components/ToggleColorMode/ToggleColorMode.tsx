@@ -16,6 +16,10 @@ function ModeSwitcher() {
             setMode(event.target.value as typeof mode);
             // For TypeScript, cast `event.target.value as 'light' | 'dark' | 'system'`:
           }}
+          style={{
+            borderRadius: '20px',
+            textAlign: 'center',
+          }}
         >
           <option value="system">System</option>
           <option value="light">Light</option>
