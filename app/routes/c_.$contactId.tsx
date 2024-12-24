@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { Link, redirect, useLoaderData, useNavigate } from '@remix-run/react';
-import Button from '@mui/material/Button';
+import { MetaFunction, redirect, useLoaderData } from '@remix-run/react';
 import ContactInfo from '@/components/Contact/ContactInfo';
 import type {
-  LinksFunction,
   LoaderFunctionArgs,
 } from "@remix-run/node";
-import { getContact } from '~/api/data';
-import { Box } from "@mui/material";
+import { DEFAULT_TITLE, getContact } from '~/api/data';
 import { console_dbg } from '@/app/api/util';
 
 
@@ -25,6 +22,12 @@ export const clientLoader = async ({
   }
 
   return Response.json({ contact });
+};
+
+export const meta: MetaFunction<typeof clientLoader> = ({
+  data,
+}) => {
+  return [{ title: data.contact?.name || DEFAULT_TITLE }];
 };
 
 export default function ContactPage() {

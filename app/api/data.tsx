@@ -93,6 +93,7 @@ export async function deleteContact(id: string): Promise<null> {
 
 export const OPEN_DRAWER = 'openDrawer';
 export const HOME_PAGE = 'homePage';
+export const DEFAULT_TITLE = 'Favorite collection';
 
 export function getLocalData(key: string, defaultValue: any) {
     const value = localStorage.getItem(key);
