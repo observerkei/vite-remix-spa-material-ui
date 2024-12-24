@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { redirect, useLoaderData } from '@remix-run/react';
+import { MetaFunction, redirect, useLoaderData } from '@remix-run/react';
 import ContactInfoEdit from '@/components/Contact/ContactInfoEdit';
 import type {
   LoaderFunctionArgs,
@@ -8,7 +8,7 @@ import type {
 import {
   Form,
 } from "@remix-run/react";
-import { getContact, updateContact } from '~/api/data';
+import { DEFAULT_TITLE, getContact, updateContact } from '~/api/data';
 import { console_dbg } from '@/app/api/util';
 import invariant from 'tiny-invariant';
 
@@ -40,6 +40,14 @@ export const clientLoader = async ({
   const contact = await getContact(params.contactId as string);
   return Response.json({ contact });
 };
+
+
+export const meta: MetaFunction<typeof clientLoader> = ({
+  data,
+}) => {
+  return [{ title: `Edit: ${data.contact?.name || "New Favorite"}` }];
+};
+
 
 export default function ContactPage() {
   const { contact } = useLoaderData<typeof clientLoader>();

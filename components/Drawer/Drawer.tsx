@@ -156,6 +156,7 @@ export default function PersistentDrawerLeft({
     const [focusContact, setFocusContact] = useState({} as ContactRecord);
     if (urlFocusContactId !== focusContact?.id) {
         console_dbg('update url f c : ', urlFocusContactId);
+        console_dbg('focusContact: ', JSON.stringify(focusContact));
         const nowFocusContact: ContactRecord[]
             = contacts.filter((c) => c.id == urlFocusContactId);
         if (nowFocusContact.length) {
@@ -163,7 +164,9 @@ export default function PersistentDrawerLeft({
             console_dbg("u f c id 2: ", JSON.stringify(nowFocusContact));
         } else {
             // clear old focus.
-            setFocusContact({ id: "" } as ContactRecord)
+            if (focusContact?.id !== "") {
+                setFocusContact({ id: "" } as ContactRecord)
+            }
         }
     }
 
