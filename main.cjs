@@ -4,7 +4,6 @@ const { app, BrowserWindow } = require('electron');
 const http = require('http-server');
 const path = require('node:path');
 
-
 const getRandomPort = () => {
   const min = 1024;
   const max = 65535;
@@ -15,21 +14,44 @@ const startServer = (port, rootPath, count) => {
   let server;
   while (count < 1000) {
     try {
-        server = http.createServer({ root: rootPath });
-        server.listen(port);
-        console.log(`Server is running at http://localhost:${port}`);
-        return port;
+      server = http.createServer({ root: rootPath });
+      server.listen(port);
+      console.log(`Server is running at http://localhost:${port}`);
+      return port;
     } catch (e) {
-        console.error(`Port ${port} is in use. Trying another...`);
-        port = getRandomPort();
+      console.error(`Port ${port} is in use. Trying another...`);
+      port = getRandomPort();
     }
   }
 
   return 0;
 }
 
+function checkURLToShow(win, url, retries = 10) {
+  let attempts = 0;
 
-function createWindow () {
+  const interval = setInterval(() => {
+    fetch(url)
+      .then(response => {
+        if (response.ok) {
+          clearInterval(interval); // Stop checking once URL is accessible
+          win.show();  // Show the window
+          console.log('URL is accessible. Window shown.');
+        }
+      })
+      .catch(() => {
+        attempts++;
+        console.log(`Attempt ${attempts}: URL is not accessible.`);
+        if (attempts >= retries) {
+          win.show();  // Show the window
+          clearInterval(interval); // Stop after 10 attempts
+          console.log('Max retries reached. URL is still not accessible.');
+        }
+      });
+  }, 1000);  // Check every second
+}
+
+function createWindow() {
   const win = new BrowserWindow({
     width: 1280,
     height: 720,
@@ -39,21 +61,41 @@ function createWindow () {
     }
   })
 
+  let port = 3000;
+  let homeURL = `http://localhost:${port}`;
+
   // Different paths to adapt development mode and run mode
-  if (!app.isPackaged) {
-    const port = 3000;
-    win.loadURL(`http://localhost:${port}`);
-  } else {
-    const port = startServer(getRandomPort(), path.join(process.resourcesPath, 'client'), 0);
-    win.loadURL(`http://localhost:${port}`);
+  if (app.isPackaged) { // pack
+    port = startServer(getRandomPort(), path.join(process.resourcesPath, 'client'), 0);
+    homeURL = `http://localhost:${port}`;
   }
 
-  win.once('ready-to-show', (event) => {
+  win.loadURL(homeURL);
+
+  win.webContents.on('will-navigate', (event, url) => {
+    const parsedUrl = new URL(url);
+
+    if (parsedUrl.hostname === 'localhost' && parsedUrl.port !== port) {
+      event.preventDefault(); // disable navigate
+
+      console.log(`change port ${parsedUrl.port} to ${port}`);
+      parsedUrl.port = port;
+      win.loadURL(parsedUrl.toString());
+    }
+  });
+
+  if (app.isPackaged) {
+    win.once('ready-to-show', (event) => {
       win.show();
-  })
+    })
+  } else {
+    checkURLToShow(win, homeURL)
+  }
+
+
   // Exit the application when the window closes
   win.on('close', (event) => {
-    app.quit(); 
+    app.quit();
   });
 }
 
@@ -72,4 +114,3 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 })
-

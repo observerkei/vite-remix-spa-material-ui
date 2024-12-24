@@ -4,7 +4,6 @@ import { RemixBrowser } from '@remix-run/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { MuiProvider } from './mui/MuiProvider';
 import { dataInit } from './api/data'
-import { useColorScheme } from '@mui/material/styles';
 
 const hydrate = () => {
   React.startTransition(() => {
@@ -12,9 +11,9 @@ const hydrate = () => {
     ReactDOM.hydrateRoot(
       document,
       <MuiProvider>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <RemixBrowser />
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <RemixBrowser />
       </MuiProvider>,
     );
   });
@@ -22,7 +21,7 @@ const hydrate = () => {
 
 if (window.requestIdleCallback) {
   window.requestIdleCallback(hydrate);
-  
+
 } else {
   // Safari doesn't support requestIdleCallback
   // https://caniuse.com/requestidlecallback
