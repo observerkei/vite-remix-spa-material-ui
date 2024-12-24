@@ -67,7 +67,7 @@ function createWindow() {
     }
   })
 
-  let port = 3000;
+  let port = 5173;
   let homeURL = creatHomeURL(port);
 
   // Different paths to adapt development mode and run mode
