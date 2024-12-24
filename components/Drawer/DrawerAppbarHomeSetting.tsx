@@ -4,6 +4,7 @@ import RoomPreferencesSharpIcon from '@mui/icons-material/RoomPreferencesSharp';
 import { PageType } from "~/api/data";
 import React from "react";
 import { console_dbg } from "~/api/util";
+import { alpha } from '@mui/material/styles';
 
 type params = {
     pageType: PageType;
@@ -30,6 +31,8 @@ export default function HomeSetting({
             window.location.reload();
         }
     }
+    const unFocusColor = "#cccccc";
+    const focusColor = "#ffffff";
 
     return (
         <>
@@ -49,33 +52,66 @@ export default function HomeSetting({
                     <RoomPreferencesSharpIcon />
                 </IconButton>
             </CustomWidthTooltip>
-
-            {
-                !hideHomeSetting && <CustomWidthTooltip title={'Add a home page that supports iframe'} placement={'bottom'} arrow>
-                    <TextField
-                        key={`home-${homePage}`}
-                        id="home-page-setting"
-                        label="Home Page"
-                        variant="outlined"
-                        size="small"
-                        type="search"
-                        autoFocus={true}
-                        autoComplete="off"
-                        value={query}
-                        onFocus={() => setQuery(homePage)}
-                        onBlur={() => setHideHomeSetting(true)}
-                        onChange={(event) => setQuery(event.currentTarget.value)}
-                        onKeyDown={handleEnter}
-                        slotProps={{
-                            input: { sx: { borderRadius: 20 } },
-                        }}
-                        sx={{
+            <CustomWidthTooltip title={'Add a home page that supports iframe'} placement={'bottom'} arrow>
+                <TextField
+                    key={`home-${homePage}`}
+                    id="home-page-setting"
+                    label="Home Page"
+                    variant="outlined"
+                    size="small"
+                    type="search"
+                    autoFocus={true}
+                    autoComplete="off"
+                    value={query}
+                    onFocus={() => setQuery(homePage)}
+                    onBlur={() => setHideHomeSetting(true)}
+                    onChange={(event) => setQuery(event.currentTarget.value)}
+                    onKeyDown={handleEnter}
+                    slotProps={{
+                        input: { sx: { borderRadius: 20 } },
+                    }}
+                    sx={[
+                        {
                             flexGrow: 1,
                             mr: 2,
-                        }}
-                    />
-                </CustomWidthTooltip>
-            }
+                            color: 'info.main',
+                        },
+                        {
+                            // Root class for the input field
+                            "& .MuiOutlinedInput-root": {
+                                color: unFocusColor,
+                                fontFamily: "Arial",
+                                fontWeight: "bold",
+                                // Class for the border around the input field
+                                "& .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: unFocusColor,
+                                    borderWidth: "2px",
+                                },
+                                "&.Mui-focused": {
+                                    "& .MuiOutlinedInput-notchedOutline": {
+                                        borderColor: focusColor,
+                                    },
+                                },
+                            },
+                            // Class for the label of the input field
+                            "& .MuiInputLabel-outlined": {
+                                color: unFocusColor,
+                                fontWeight: "bold",
+                                "&.Mui-focused": {
+                                    color: focusColor,
+                                },
+                            },
+                            "& .Mui-focused": {
+                                "&.MuiOutlinedInput-root": {
+                                    color: focusColor,
+                                }
+                            },
+                        },
+                        hideHomeSetting && { display: 'none' }
+                    ]
+                    }
+                />
+            </CustomWidthTooltip>
         </>
     )
 }
