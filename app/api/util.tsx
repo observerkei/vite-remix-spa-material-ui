@@ -1,6 +1,5 @@
 const log_enable = true;
 
-
 export function console_dbg(...params: any[]): void {
     if (!log_enable) return;
 
@@ -27,9 +26,20 @@ export function console_dbg(...params: any[]): void {
             const match = line.match(chromePattern) || line.match(safariPattern);
 
             if (match) {
-                functionName = match[1] || "anonymous";
-                lineNumber = match[3] || "unknown line";
-                break;
+              functionName = match[1]
+              lineNumber = match[3]
+              if (!functionName || !lineNumber) {
+                const chromeAsyncPattern = /at\s+.*\/([^/]+)\?t=([^:]+):(\d+):(\d+)/;
+                const matchAsync = line.match(chromeAsyncPattern);
+                if (matchAsync) {
+                  functionName = matchAsync[1]
+                  lineNumber = matchAsync[3]
+                }
+              }
+              
+              functionName = functionName ? functionName : "anonymous";
+              lineNumber = lineNumber ? lineNumber : "unknown line";
+              break;
             }
         }
 
