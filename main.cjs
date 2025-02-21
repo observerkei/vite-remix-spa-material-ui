@@ -31,7 +31,7 @@ const startServer = (port, rootPath, count) => {
   return 0;
 }
 
-function checkURLToShow(win, url, retries = 10) {
+function checkURLToShow(win, url, retries = 30) {
   let attempts = 0;
 
   const interval = setInterval(() => {

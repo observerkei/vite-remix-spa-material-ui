@@ -35,7 +35,7 @@ const fakeContacts = {
         const createAt = new Date().toISOString();
         const newContact = { id, ...value, createAt };
         fakeContacts.records[id] = newContact;
-        
+
         fakeContacts.fflush();
         return newContact;
     },
@@ -44,13 +44,23 @@ const fakeContacts = {
         invariant(contact, `No contact found for ${id}`);
         const updateContact = { ...contact, ...value };
         fakeContacts.records[id] = updateContact;
-        
+
         fakeContacts.fflush();
         return updateContact;
     },
     destory(id: string): null {
         delete fakeContacts.records[id];
-        
+
+        fakeContacts.fflush();
+        return null;
+    },
+    setAll(contacts: Record<string, ContactRecord>): null {
+        fakeContacts.records = {};
+        Object.keys(contacts)
+            .map((key) => fakeContacts.create({
+                ...(contacts[key])
+            }))
+
         fakeContacts.fflush();
         return null;
     },
@@ -89,6 +99,10 @@ export async function updateContact(id: string, update: ContactInfoType): Promis
 
 export async function deleteContact(id: string): Promise<null> {
     return fakeContacts.destory(id);
+}
+
+export function updateContacts(contacts: Record<string, ContactRecord>): null {
+    return fakeContacts.setAll(contacts);
 }
 
 export const OPEN_DRAWER = 'openDrawer';
@@ -148,10 +162,7 @@ export function dataInit() {
         } else {
             //console_dbg('has local')
             const contacts: Record<string, ContactRecord> = JSON.parse(localDB);
-            Object.keys(contacts)
-                .map((key) => fakeContacts.create({
-                    ...(contacts[key])
-                }))
+            fakeContacts.setAll(contacts);
             //console_dbg(fakeContacts.records)
         }
     }

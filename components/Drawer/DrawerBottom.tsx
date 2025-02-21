@@ -8,6 +8,9 @@ import {
 import { mobileMaxWidth } from "./Drawer";
 import { useMediaQuery } from 'react-responsive';
 import { CustomWidthTooltip } from "../Contact/ContactList";
+import ImportButtom from './ImportButton';
+import ExportButtom from './ExportButton';
+
 
 export const appBottomHeight = 64;
 
@@ -46,16 +49,16 @@ export default function DrawerBottom({ handleDrawerClose }: { handleDrawerClose:
                             type="submit"
                             sx={{
                                 flexGrow: 1,
-                                width: '100%',
                                 borderRadius: 28,
                             }}
-
+                            fullWidth={true}
                             onClick={closeDrawer}
                         >
                             ADD
                         </Button>
                     </CustomWidthTooltip>
-
+                    <ImportButtom />
+                    <ExportButtom />
 
                 </Form>
             </Box>
